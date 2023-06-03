@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Button, Modal } from 'react-bootstrap';
 import ViewModalPopup from './modalPopups/ViewModalPopup';
-import UserList from './modalPopups/UserList';
+import UserList from './UserList';
+import CreateModalPopup from './modalPopups/CreateModalPopup';
 
 const UserApp = () => {
   const apiData = `${process.env.REACT_APP_API}/users`;
@@ -12,17 +13,17 @@ const UserApp = () => {
   const [isloading, setIsLoading] = useState(false);
   // For modal popup
   const [viewModal, setViewModal] = useState(false);
+  const [createModal, setCreateModal] = useState(false);
 
   const handleClose = () => setViewModal(false);
-
-  // const apiData = "https://jsonplaceholder.typicode.com/users";
+  const handleCreateClose = () => setCreateModal(false);
 
   const getUser = () => {
     setIsLoading(true);
     axios
       .get(apiData)
       .then((response) => {
-        console.log('Response-->', response);
+        // console.log('Response-->', response);
         setIsLoading(true);
         if (response.status === 200) {
           setUdetails(response.data);
@@ -54,7 +55,9 @@ const UserApp = () => {
   return (
     <div>
       <h1 className="m-4">React User App Using jsonplaceholder Api</h1>{' '}
-      <Button variant="success">Add new</Button>
+      <Button variant="success" onClick={() => setCreateModal(true)}>
+        Add new
+      </Button>
       {/* View Modal Popup Start */}
       <ViewModalPopup
         viewModal={viewModal}
@@ -62,6 +65,16 @@ const UserApp = () => {
         showData={showData}
       />
       {/* View Modal Popup End */}
+      {/* Create Modal Popup */}
+      <CreateModalPopup
+        createModal={createModal}
+        handleCreateClose={handleCreateClose}
+        setUdetails={setUdetails}
+        udetails={udetails}
+      />
+      {/* Create Modal Popup End */}
+      {/* Edit User Popup */}
+      {/* Edit User Popup End */}
       {isloading === true ? (
         <h2 style={{ color: 'grey' }}>Loading Please Wait...!!</h2>
       ) : udetails.length === 0 ? (
@@ -78,7 +91,7 @@ const UserApp = () => {
             </tr>
           </thead>
           {udetails &&
-            udetails.map((userData, userindex) => {
+            udetails?.map((userData, userindex) => {
               return (
                 <>
                   <UserList

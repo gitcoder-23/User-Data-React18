@@ -6,7 +6,7 @@ const UserList = ({ userData, viewData, deldata, userindex }) => {
       <tbody key={userindex}>
         <tr>
           <td style={{ backgroundColor: 'brown', color: 'white' }}>
-            {userData.id}
+            {userindex + 1}
           </td>
           &nbsp;&nbsp;
           <td style={{ backgroundColor: 'green', color: 'white' }}>
