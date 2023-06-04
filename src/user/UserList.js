@@ -1,6 +1,7 @@
 import React from 'react';
 
-const UserList = ({ userData, viewData, deldata, userindex }) => {
+const UserList = (props) => {
+  const { userData, viewData, deldata, userindex, editClick } = props;
   return (
     <>
       <tbody key={userindex}>
@@ -22,20 +23,22 @@ const UserList = ({ userData, viewData, deldata, userindex }) => {
           </td>
           &nbsp;&nbsp;
           <td>
-            <button
-              className="btn btn-primary"
-              onClick={() => viewData(userData)}
-            >
+            <button className="btn btn-info" onClick={() => viewData(userData)}>
               Show
             </button>
             &nbsp;
-            <button style={{ borderWidth: '1px', borderRadius: '5px' }}>
+            <button
+              className="btn btn-warning"
+              style={{ borderWidth: '1px', borderRadius: '5px' }}
+              onClick={() => editClick(userData)}
+            >
               Modify
             </button>
             &nbsp;
             <button
+              className="btn btn-danger"
               style={{
-                color: 'red',
+                color: '#fff',
                 borderWidth: '1px',
                 borderRadius: '5px',
               }}

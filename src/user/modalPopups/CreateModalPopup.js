@@ -44,7 +44,7 @@ const CreateModalPopup = ({
     }
   };
 
-  console.log('udetails-->', udetails);
+  // console.log('udetails-->', udetails);
   return (
     <Modal show={createModal} onHide={handleCreateClose}>
       <Modal.Header closeButton>

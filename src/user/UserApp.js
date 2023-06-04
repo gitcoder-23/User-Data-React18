@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Button, Modal } from 'react-bootstrap';
+import { Button, Form, InputGroup, Modal } from 'react-bootstrap';
 import ViewModalPopup from './modalPopups/ViewModalPopup';
 import UserList from './UserList';
 import CreateModalPopup from './modalPopups/CreateModalPopup';
+import EditModalPopup from './modalPopups/EditModalPopup';
 
 const UserApp = () => {
   const apiData = `${process.env.REACT_APP_API}/users`;
@@ -14,9 +15,20 @@ const UserApp = () => {
   // For modal popup
   const [viewModal, setViewModal] = useState(false);
   const [createModal, setCreateModal] = useState(false);
+  const [editModal, setEditModal] = useState(false);
 
-  const handleClose = () => setViewModal(false);
-  const handleCreateClose = () => setCreateModal(false);
+  // Edit Ops
+  const [editId, setEditId] = useState('');
+  const [editUserName, setEditUserName] = useState('');
+  const [editUserEmail, setEditUserEmail] = useState('');
+  const [editUserPhone, setEditUserPhone] = useState('');
+
+  const handleClose = () => {
+    setViewModal(false);
+  };
+  const handleCreateClose = () => {
+    setCreateModal(false);
+  };
 
   const getUser = () => {
     setIsLoading(true);
@@ -40,8 +52,8 @@ const UserApp = () => {
   }, []);
 
   const viewData = (showData) => {
-    setShowData(showData);
     setViewModal(true);
+    setShowData(showData);
   };
   const deldata = (del) => {
     console.log('del-->', del);
@@ -51,7 +63,32 @@ const UserApp = () => {
     }
   };
 
-  // console.log('udetails-->',udetails);
+  const editClick = (edData) => {
+    // console.log('editClick-->', edData);
+    setEditModal(true);
+    const userId = parseInt(edData.id);
+    setEditId(userId);
+    setEditUserName(edData.name);
+    setEditUserEmail(edData.email);
+    setEditUserPhone(edData.phone);
+  };
+
+  const saveEdit = () => {
+    // console.log('saveEdit->', editUserName, editUserEmail, editUserPhone);
+    const editDetails = [...udetails].map((eData, indx) => {
+      if (eData.id === editId) {
+        eData.name = editUserName;
+        eData.email = editUserEmail;
+        eData.phone = editUserPhone;
+      }
+      return eData;
+    });
+    setUdetails(editDetails);
+
+    setEditModal(false);
+  };
+
+  console.log('udetails-->', udetails);
   return (
     <div>
       <h1 className="m-4">React User App Using jsonplaceholder Api</h1>{' '}
@@ -74,6 +111,17 @@ const UserApp = () => {
       />
       {/* Create Modal Popup End */}
       {/* Edit User Popup */}
+      <EditModalPopup
+        editModal={editModal}
+        setEditModal={setEditModal}
+        editUserName={editUserName}
+        setEditUserName={setEditUserName}
+        editUserEmail={editUserEmail}
+        setEditUserEmail={setEditUserEmail}
+        editUserPhone={editUserPhone}
+        setEditUserPhone={setEditUserPhone}
+        saveEdit={saveEdit}
+      />
       {/* Edit User Popup End */}
       {isloading === true ? (
         <h2 style={{ color: 'grey' }}>Loading Please Wait...!!</h2>
@@ -100,6 +148,7 @@ const UserApp = () => {
                     viewData={viewData}
                     deldata={deldata}
                     userindex={userindex}
+                    editClick={editClick}
                   />
                 </>
               );
