@@ -4,8 +4,7 @@ import UserApp from "./user/UserApp";
 
 const App = () => {
 
- 
-   
+
   return (
     <div className="App" >
       <UserApp/>
