@@ -7,10 +7,8 @@ import Modal from 'react-bootstrap/Modal';
 import Card from 'react-bootstrap/Card';
 import Badge from 'react-bootstrap/Badge';
 import ListGroup from 'react-bootstrap/ListGroup';
-import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
-import Row from 'react-bootstrap/Row';
 
 
 const UserAppTask = () => {
@@ -18,18 +16,43 @@ const UserAppTask = () => {
 
     const [userlist, setUserlist] = useState([]);
     const [showUserData, setShowUserData] = useState({});
+    const [dadaLoading, setDataLoading] = useState(false);
     const [viewModal, setViewModal] = useState(false);
-    //Add modal with Validation//
-    const [addModalValidation, setAddModalValidation] = useState(false);
+    //Add modal //
+    const [addModal, setAddModal] = useState(false);
+    const [userFirstName, setUserFirstName] = useState('');
+    const [userLastName, setUserLastName] = useState('');
+    const [maidenName, setMaidenName] = useState('');
+    const [userAge, setUserAge] = useState('');
+    const [userEmail, setUserEmail] = useState('');
+    const [userPhone, setUserPhone] = useState('');
+    const [showSuccess, setShowSuccess] = useState(false);
+    const [showMessage, setShowMessage] = useState('');
+    //Edit Modal//
+    const [editUserModal, setEditUserModal] = useState(false);
+    const [editUserId, setEditUserId] = useState('');
+    const [editUserFirstName, setEditUserFirstName] = useState('');
+    const [editUserLastName, setEditUserLastName] = useState('');
+    const [editMaidenName, setEditMaidenName] = useState('');
+    const [editUserAge, setEditUserAge] = useState('');
+    const [editUserEmail, setEditUserEmail] = useState('');
+    const [editUserPhone, setEditUserPhone] = useState('');
+
+
 
 
     // const reactUrl = `${process.env.REACT_APP_API_X}/docs/users`
 
     
     const getData = () =>{
+      setDataLoading(true);
         axios.get("https://dummyjson.com/users").then((response) =>{
-            console.log('response-->',response.data.users);
+            // console.log('response-->',response.data.users);
+            setDataLoading(true);
+            if (response.status === 200){
             setUserlist(response.data.users);
+            setDataLoading(false);
+            }
         })
         .catch((errorData) =>{
             console.log(errorData);
@@ -54,19 +77,88 @@ const UserAppTask = () => {
         }
     
     }
+
+    const editData = (eData)=>{
+      // console.log('eData-->',eData);
+      setEditUserModal(true);
+      // setEditUserId(parseInt(eData.id));
+      const editId = parseInt(eData.id);
+      // console.log('editId-->',editId);
+      setEditUserId(editId);
+      setEditUserFirstName(eData.firstName);
+      setEditUserLastName(eData.lastName);
+      setEditMaidenName(eData.maidenName);
+      setEditUserAge(eData.age);
+      setEditUserEmail(eData.email);
+      setEditUserPhone(eData.phone);
+    }
+
+    const editSaveData = ()=>{
+      // console.log('editSaveData',editUserFirstName,editUserLastName,editMaidenName,editUserAge,editUserEmail,editUserPhone);
+      const inputData = [...userlist].map((userValue, userIndex)=>{
+        // console.log(' userValue.firstName-->', userValue.firstName);
+        if(userValue.id === editUserId){
+          userValue.firstName = editUserFirstName;
+          userValue.lastName = editUserLastName;
+          userValue.maidenName = editMaidenName;
+          userValue.age = editUserAge;
+          userValue.email = editUserEmail;
+          userValue.phone = editUserPhone;
+        }
+        return userValue;
+      })
+      // console.log('inputData-->',inputData);
+
+      setUserlist(inputData);
+      
+      setEditUserModal(false);
+    }
    
 
-    //Add Modal Validation function//
-    const handleSubmit = (event) => {
-        const form = event.currentTarget;
-        if (form.checkValidity() === false) {
-          event.preventDefault();
-          event.stopPropagation();
-        }
-    
-        setAddModalValidation(true);
-      };
+    //Add Modal //
+    const handleClose = () => setAddModal(false);
+    const editClose = () => setEditUserModal(false);
 
+
+
+
+    const saveUserData = () =>{
+      // console.log('saveUserData message');
+      if (!userFirstName || ! userLastName|| !maidenName || !userAge || !userEmail || !userPhone) {
+        setShowSuccess(false);
+        setShowMessage('Empty Field !')
+        setTimeout(()=>{
+          setShowMessage('');
+        }, 2000);
+      }else{
+        const userNewValue = {
+          id : Date.now(),
+          firstName : userFirstName,
+          lastName : userLastName,
+          maidenName : maidenName,
+          age :userAge,
+          email:userEmail,
+          phone : userPhone,
+        };
+        // console.log('userUpdateValue-->',userUpdateValue);
+        setUserlist([...userlist, userNewValue]);
+        setShowSuccess(true);
+        setShowMessage('Create Successfull !');
+        setTimeout(()=>{
+          setShowMessage('');
+          setUserFirstName('');
+          setUserLastName('');
+          setMaidenName('');
+          setUserAge('');
+          setUserEmail('');
+          setUserPhone('');
+          handleClose();
+        }, 2000);
+      }
+    }
+    
+
+    // console.log('userlist-->',userlist);
 
   return (
     <div>
@@ -99,143 +191,236 @@ const UserAppTask = () => {
       </Modal>
         {/* view modal end */}
         {/* Add modal start */}
-        <Form noValidate validated={addModalValidation} onSubmit={handleSubmit}>
-      <Row className="mb-3">
-        <Form.Group as={Col} md="4" controlId="validationCustom01">
-          <Form.Label>First name</Form.Label>
-          <Form.Control
-            required
-            type="text"
-            placeholder="First name"
-            defaultValue="Mark"
-          />
-          <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-        </Form.Group>
-        <Form.Group as={Col} md="4" controlId="validationCustom02">
-          <Form.Label>Last name</Form.Label>
-          <Form.Control
-            required
-            type="text"
-            placeholder="Last name"
-            defaultValue="Otto"
-          />
-          <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-        </Form.Group>
-        <Form.Group as={Col} md="4" controlId="validationCustomUsername">
-          <Form.Label>Username</Form.Label>
-          <InputGroup hasValidation>
-            <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
+        <Modal show={addModal} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>User Register</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+        <Form>
+          <Form.Group md="4">
+            <Form.Label>User First Name</Form.Label>
             <Form.Control
               type="text"
-              placeholder="Username"
-              aria-describedby="inputGroupPrepend"
-              required
+              name="userFirstName"
+              id="userFirstName"
+              placeholder="First Name"
+              defaultValue=""
+              onChange={(e) => setUserFirstName(e.target.value)}
             />
-            <Form.Control.Feedback type="invalid">
-              Please choose a username.
-            </Form.Control.Feedback>
-          </InputGroup>
-        </Form.Group>
-      </Row>
-      <Row className="mb-3">
-        <Form.Group as={Col} md="6" controlId="validationCustom03">
-          <Form.Label>City</Form.Label>
-          <Form.Control type="text" placeholder="City" required />
-          <Form.Control.Feedback type="invalid">
-            Please provide a valid city.
-          </Form.Control.Feedback>
-        </Form.Group>
-        <Form.Group as={Col} md="3" controlId="validationCustom04">
-          <Form.Label>State</Form.Label>
-          <Form.Control type="text" placeholder="State" required />
-          <Form.Control.Feedback type="invalid">
-            Please provide a valid state.
-          </Form.Control.Feedback>
-        </Form.Group>
-        <Form.Group as={Col} md="3" controlId="validationCustom05">
-          <Form.Label>Zip</Form.Label>
-          <Form.Control type="text" placeholder="Zip" required />
-          <Form.Control.Feedback type="invalid">
-            Please provide a valid zip.
-          </Form.Control.Feedback>
-        </Form.Group>
-      </Row>
-      <Form.Group className="mb-3">
-        <Form.Check
-          required
-          label="Agree to terms and conditions"
-          feedback="You must agree before submitting."
-          feedbackType="invalid"
-        />
-      </Form.Group>
-      <Button type="submit">Submit form</Button>
-    </Form>
+          </Form.Group>
+          <Form.Group md="4">
+            <Form.Label>User Last Name</Form.Label>
+            <Form.Control
+              type="text"
+              name="userLastName"
+              id="userLastName"
+              placeholder="Last Name"
+              defaultValue=""
+              onChange={(e) => setUserLastName(e.target.value)}
+            />
+          </Form.Group>
+          <Form.Group md="4">
+            <Form.Label>Maiden Name</Form.Label>
+            <Form.Control
+              type="text"
+              name="maidenName"
+              id="maidenName"
+              placeholder="Maiden Name"
+              defaultValue=""
+              onChange={(e) => setMaidenName(e.target.value)}
+            />
+          </Form.Group>
+          <Form.Group md="4">
+            <Form.Label>Age</Form.Label>
+            <Form.Control
+              type="text"
+              name="userAge"
+              id="userAge"
+              placeholder="Age"
+              defaultValue=""
+              onChange={(e) => setUserAge(e.target.value)}
+            />
+          </Form.Group>
+          <Form.Group md="4">
+            <Form.Label>Email</Form.Label>
+            <InputGroup hasValidation>
+              <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
+              <Form.Control
+                type="text"
+                placeholder="Email"
+                name="userEmail"
+                id="userEmail"
+                defaultValue=""
+                onChange={(e) => setUserEmail(e.target.value)}
+              />
+            </InputGroup>
+          </Form.Group>
+          <Form.Group md="4">
+            <Form.Label>Phone</Form.Label>
+            <Form.Control
+              type="text"
+              name="userPhone"
+              id="userPhone"
+              placeholder="Phone Number"
+              defaultValue=""
+              onChange={(e) => setUserPhone(e.target.value)}
+            />
+          </Form.Group>
+        </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          {showMessage? (
+            <h4 style={{color : showSuccess === true ? 'green' :'red'}}>
+              {showMessage}
+            </h4>
+          ): (<></>)}
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={saveUserData}>
+            Register
+          </Button>
+        </Modal.Footer>
+      </Modal>
         {/* Add modal end */}
+        {/* Edit Modal Start */}
+        <Modal show={editUserModal} onHide={()=>setEditUserModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>User Edit Portal</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+        <Form>
+          <Form.Group md="4">
+            <Form.Label>User First Name</Form.Label>
+            <Form.Control
+              type="text"
+              name="userFirstName"
+              id="userFirstName"
+              placeholder="First Name"
+              defaultValue={editUserFirstName}
+              onChange={(e) => setUserFirstName(e.target.value)}
+            />
+          </Form.Group>
+          <Form.Group md="4">
+            <Form.Label>User Last Name</Form.Label>
+            <Form.Control
+              type="text"
+              name="userLastName"
+              id="userLastName"
+              placeholder="Last Name"
+              defaultValue={editUserLastName}
+              onChange={(e) => setUserLastName(e.target.value)}
+            />
+          </Form.Group>
+          <Form.Group md="4">
+            <Form.Label>Maiden Name</Form.Label>
+            <Form.Control
+              type="text"
+              name="maidenName"
+              id="maidenName"
+              placeholder="Maiden Name"
+              defaultValue={editMaidenName}
+              onChange={(e) => setMaidenName(e.target.value)}
+            />
+          </Form.Group>
+          <Form.Group md="4">
+            <Form.Label>Age</Form.Label>
+            <Form.Control
+              type="text"
+              name="userAge"
+              id="userAge"
+              placeholder="Age"
+              defaultValue={editUserAge}
+              onChange={(e) => setUserAge(e.target.value)}
+            />
+          </Form.Group>
+          <Form.Group md="4">
+            <Form.Label>Email</Form.Label>
+            <InputGroup hasValidation>
+              <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
+              <Form.Control
+                type="text"
+                placeholder="Email"
+                name="userEmail"
+                id="userEmail"
+                defaultValue={editUserEmail}
+                onChange={(e) => setUserEmail(e.target.value)}
+              />
+            </InputGroup>
+          </Form.Group>
+          <Form.Group md="4">
+            <Form.Label>Phone</Form.Label>
+            <Form.Control
+              type="text"
+              name="userPhone"
+              id="userPhone"
+              placeholder="Phone Number"
+              defaultValue={editUserPhone}
+              onChange={(e) => setUserPhone(e.target.value)}
+            />
+          </Form.Group>
+        </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={editClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={editSaveData}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+        {/* Edit Modal End */}
+
 
 
       <h1 className="m-4">React User App Using dummyjason Api</h1>{' '}
-      <Button variant="warning" onClick={()=>setAddModalValidation(true)}>Add User</Button>{' '}
-      <Table striped="columns">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>User Name</th>
-          <th>Maiden Name</th>
-          <th>Age</th>
-          <th>Email</th>
-          <th>Phone</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      {
-        userlist && userlist.map((datalist, dataindex) =>{
-            return (
-                <tbody>
-                <tr>
-                  <td>{datalist.id}</td>
-                  <td>{datalist.firstName} {datalist.lastName}</td>
-                  <td>{datalist.maidenName}</td>
-                  <th>{datalist.age}</th>
-                  <th>{datalist.email}</th>
-                  <th>{datalist.phone}</th>
-                  <td>
-                  <Button variant="primary" onClick={()=>viewData(datalist)}>View</Button>{' '}
-                  <Button variant="secondary">Edit</Button>{' '}
-                  <Button variant="danger" onClick={()=>deleteData(dataindex)}>Delete</Button>
-                  </td>
-                </tr>
-              </tbody>
-            )
-        })
-      }
-     
-    </Table>
-      {/* <table class="table table-success table-striped">
-          <thead>
+
+      {dadaLoading === true ? (<h2 style={{color:'brown', fontSize:'20px'}}>Data is Loading !...</h2>) 
+      : userlist.length === 0 ? 
+      (<h2 style={{color:'grey', fontSize:'20px'}}>No Data ! </h2>) 
+      : (
+        <>
+        <Button variant="warning" onClick={()=>setAddModal(true)}>Add User</Button>{' '}
+        <Table striped="columns">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>User Name</th>
+      <th>Maiden Name</th>
+      <th>Age</th>
+      <th>Email</th>
+      <th>Phone</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  {
+    userlist && userlist.map((datalist, dataindex) =>{
+        return (
+            <tbody>
             <tr>
-              <th>Id NO.</th>&nbsp;&nbsp;
-              <th>First Name</th>&nbsp;&nbsp;
-              <th>Last Name</th>&nbsp;&nbsp;
-              <th col="3">Action</th>
+              <td>{dataindex+1}</td>
+              <td>{datalist.firstName} {datalist.lastName}</td>
+              <td>{datalist.maidenName}</td>
+              <th>{datalist.age}</th>
+              <th>{datalist.email}</th>
+              <th>{datalist.phone}</th>
+              <td>
+              <Button variant="primary" onClick={()=>viewData(datalist)}>View</Button>{' '}
+              <Button variant="secondary" onClick={()=>editData(datalist)}>Edit</Button>{' '}
+              <Button variant="danger" onClick={()=>deleteData(dataindex)}>Delete</Button>
+              </td>
             </tr>
-          </thead>
-          {userlist && userlist.map((datalist, dataindex) => {
-            return (
-                <tbody key={dataindex}>
-                <tr>
-                    <td>{dataindex+1}</td>
-                    <td>{datalist.firstName}</td>
-                    <td>{datalist.lastName}</td>
-                    <td>
-                        <button>View</button>
-                        <button>Change</button>
-                        <button>Delete</button>
-                    </td>
-                </tr>
-              </tbody>
-            )
-          })}
-        </table>  */}
+          </tbody>
+        )
+    })
+  }
+ 
+        </Table>
+        </>
+      
+      )}
+     
     </div>
   )
 }
