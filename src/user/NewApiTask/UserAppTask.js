@@ -3,12 +3,9 @@ import Menu from './Nav/Menu'
 import axios from 'axios'
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
-import Card from 'react-bootstrap/Card';
-import Badge from 'react-bootstrap/Badge';
-import ListGroup from 'react-bootstrap/ListGroup';
-import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/InputGroup';
+import ViewTaskModal from './taskModal/ViewTaskModal';
+import AddTaskModal from './taskModal/AddTaskModal';
+import EditTaskModal from './taskModal/EditTaskModal';
 
 
 const UserAppTask = () => {
@@ -164,212 +161,46 @@ const UserAppTask = () => {
     <div>
         <Menu/>
         {/* view modal start */}
-        <Modal show={viewModal} onHide={()=> setViewModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>User Details</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-        <Card style={{ width: '18rem' }}>
-      <Card.Body>
-        <Card.Text>
-        <ListGroup variant="flush">
-        <ListGroup.Item><h4><Badge bg="secondary">User Name :</Badge></h4>{showUserData.firstName} {showUserData.lastName}</ListGroup.Item>
-        <ListGroup.Item><h4><Badge bg="secondary">User Maiden Name :</Badge></h4>{showUserData.maidenName}</ListGroup.Item>
-        <ListGroup.Item><h4><Badge bg="secondary">User Age :</Badge></h4>{showUserData.age}</ListGroup.Item>
-        <ListGroup.Item><h4><Badge bg="secondary">User Email :</Badge></h4>{showUserData.email}</ListGroup.Item>
-        <ListGroup.Item><h4><Badge bg="secondary">User Phone :</Badge></h4>{showUserData.phone}</ListGroup.Item>
-      </ListGroup>
-        </Card.Text>
-      </Card.Body>
-    </Card>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={()=> setViewModal(false)}>
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal>
+       <ViewTaskModal
+       viewModal={viewModal}
+       setViewModal={setViewModal}
+       showUserData={showUserData}
+        />
         {/* view modal end */}
         {/* Add modal start */}
-        <Modal show={addModal} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>User Register</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-        <Form>
-          <Form.Group md="4">
-            <Form.Label>User First Name</Form.Label>
-            <Form.Control
-              type="text"
-              name="userFirstName"
-              id="userFirstName"
-              placeholder="First Name"
-              defaultValue=""
-              onChange={(e) => setUserFirstName(e.target.value)}
-            />
-          </Form.Group>
-          <Form.Group md="4">
-            <Form.Label>User Last Name</Form.Label>
-            <Form.Control
-              type="text"
-              name="userLastName"
-              id="userLastName"
-              placeholder="Last Name"
-              defaultValue=""
-              onChange={(e) => setUserLastName(e.target.value)}
-            />
-          </Form.Group>
-          <Form.Group md="4">
-            <Form.Label>Maiden Name</Form.Label>
-            <Form.Control
-              type="text"
-              name="maidenName"
-              id="maidenName"
-              placeholder="Maiden Name"
-              defaultValue=""
-              onChange={(e) => setMaidenName(e.target.value)}
-            />
-          </Form.Group>
-          <Form.Group md="4">
-            <Form.Label>Age</Form.Label>
-            <Form.Control
-              type="text"
-              name="userAge"
-              id="userAge"
-              placeholder="Age"
-              defaultValue=""
-              onChange={(e) => setUserAge(e.target.value)}
-            />
-          </Form.Group>
-          <Form.Group md="4">
-            <Form.Label>Email</Form.Label>
-            <InputGroup hasValidation>
-              <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
-              <Form.Control
-                type="text"
-                placeholder="Email"
-                name="userEmail"
-                id="userEmail"
-                defaultValue=""
-                onChange={(e) => setUserEmail(e.target.value)}
-              />
-            </InputGroup>
-          </Form.Group>
-          <Form.Group md="4">
-            <Form.Label>Phone</Form.Label>
-            <Form.Control
-              type="text"
-              name="userPhone"
-              id="userPhone"
-              placeholder="Phone Number"
-              defaultValue=""
-              onChange={(e) => setUserPhone(e.target.value)}
-            />
-          </Form.Group>
-        </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          {showMessage? (
-            <h4 style={{color : showSuccess === true ? 'green' :'red'}}>
-              {showMessage}
-            </h4>
-          ): (<></>)}
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={saveUserData}>
-            Register
-          </Button>
-        </Modal.Footer>
-      </Modal>
+        <AddTaskModal
+        addModal={addModal}
+        setAddModal={setAddModal}
+        setUserFirstName={setUserFirstName}
+        setUserLastName={setUserLastName}
+        setMaidenName={setMaidenName}
+        setUserAge={setUserAge}
+        setUserEmail={setUserEmail}
+        setUserPhone={setUserPhone}
+        showMessage={showMessage}
+        showSuccess={showSuccess}
+        saveUserData={saveUserData}
+         />
         {/* Add modal end */}
         {/* Edit Modal Start */}
-        <Modal show={editUserModal} onHide={()=>setEditUserModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>User Edit Portal</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-        <Form>
-          <Form.Group md="4">
-            <Form.Label>User First Name</Form.Label>
-            <Form.Control
-              type="text"
-              name="userFirstName"
-              id="userFirstName"
-              placeholder="First Name"
-              defaultValue={editUserFirstName}
-              onChange={(e) => setUserFirstName(e.target.value)}
-            />
-          </Form.Group>
-          <Form.Group md="4">
-            <Form.Label>User Last Name</Form.Label>
-            <Form.Control
-              type="text"
-              name="userLastName"
-              id="userLastName"
-              placeholder="Last Name"
-              defaultValue={editUserLastName}
-              onChange={(e) => setUserLastName(e.target.value)}
-            />
-          </Form.Group>
-          <Form.Group md="4">
-            <Form.Label>Maiden Name</Form.Label>
-            <Form.Control
-              type="text"
-              name="maidenName"
-              id="maidenName"
-              placeholder="Maiden Name"
-              defaultValue={editMaidenName}
-              onChange={(e) => setMaidenName(e.target.value)}
-            />
-          </Form.Group>
-          <Form.Group md="4">
-            <Form.Label>Age</Form.Label>
-            <Form.Control
-              type="text"
-              name="userAge"
-              id="userAge"
-              placeholder="Age"
-              defaultValue={editUserAge}
-              onChange={(e) => setUserAge(e.target.value)}
-            />
-          </Form.Group>
-          <Form.Group md="4">
-            <Form.Label>Email</Form.Label>
-            <InputGroup hasValidation>
-              <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
-              <Form.Control
-                type="text"
-                placeholder="Email"
-                name="userEmail"
-                id="userEmail"
-                defaultValue={editUserEmail}
-                onChange={(e) => setUserEmail(e.target.value)}
-              />
-            </InputGroup>
-          </Form.Group>
-          <Form.Group md="4">
-            <Form.Label>Phone</Form.Label>
-            <Form.Control
-              type="text"
-              name="userPhone"
-              id="userPhone"
-              placeholder="Phone Number"
-              defaultValue={editUserPhone}
-              onChange={(e) => setUserPhone(e.target.value)}
-            />
-          </Form.Group>
-        </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={editClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={editSaveData}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal>
+        <EditTaskModal 
+        editUserModal={editUserModal}
+        setEditUserModal={setEditUserModal}
+        editUserFirstName={editUserFirstName}
+        setEditUserFirstName={setEditUserFirstName}
+        editUserLastName={editUserLastName}
+        setEditUserLastName={setEditUserLastName}
+        editMaidenName={editMaidenName}
+        setEditMaidenName={setEditMaidenName}
+        editUserAge={editUserAge}
+        setEditUserAge={setEditUserAge}
+        editUserEmail={editUserEmail}
+        setEditUserEmail={setEditUserEmail}
+        editUserPhone={editUserPhone}
+        setEditUserPhone={setEditUserPhone}
+        editClose={editClose}
+        editSaveData={editSaveData}
+        />
         {/* Edit Modal End */}
 
 
