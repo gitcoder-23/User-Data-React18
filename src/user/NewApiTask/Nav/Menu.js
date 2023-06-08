@@ -1,7 +1,5 @@
 import React from 'react'
-// import { Link } from "react-router-dom";
-// import {  } from "bootstrap";
-import { Button, Nav } from 'react-bootstrap';
+import { Button, Dropdown, Nav } from 'react-bootstrap';
 
 const Menu = () => {
   return (
@@ -17,17 +15,18 @@ const Menu = () => {
         <li className="nav-item">
           <a className="nav-link active" aria-current="page" href="/">Home</a>
         </li>
-        <li className="nav-item dropdown">
-          <a className="nav-link dropdown-toggle" href="/" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            App Menu
-          </a>
-          <ul className="dropdown-menu">
-            <li><a className="dropdown-item" href="/userapp">userapp</a></li>
-            <li><a className="dropdown-item" href="/userapptask">UserAppTask</a></li>
-            <li><hr className="dropdown-divider"/></li>
-          </ul>
-        </li>
+        <Dropdown>
+      <Dropdown.Toggle variant="light" id="dropdown-basic">
+        Application Menu
+      </Dropdown.Toggle>
+
+      <Dropdown.Menu>
+        <Dropdown.Item href="/userapp">User list  app</Dropdown.Item>
+        <Dropdown.Item href="/userapptask">User list Dummy Json</Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
       </ul>
+      
       <form className="d-flex" role="search">
         <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
         <button className="btn btn-outline-success" type="submit">Search</button>

@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button';
 import ViewTaskModal from './taskModal/ViewTaskModal';
 import AddTaskModal from './taskModal/AddTaskModal';
 import EditTaskModal from './taskModal/EditTaskModal';
+import { Spinner } from 'react-bootstrap';
 
 
 const UserAppTask = () => {
@@ -207,7 +208,19 @@ const UserAppTask = () => {
 
       <h1 className="m-4">React User App Using dummyjason Api</h1>{' '}
 
-      {dadaLoading === true ? (<h2 style={{color:'brown', fontSize:'20px'}}>Data is Loading !...</h2>) 
+      {dadaLoading === true ? (
+      // <h2 style={{color:'brown', fontSize:'20px'}}>Data is Loading !...</h2>
+      <Button variant="primary" disabled>
+        <Spinner
+          as="span"
+          animation="grow"
+          size="sm"
+          role="status"
+          aria-hidden="true"
+        />
+        Please wait...
+      </Button>
+      ) 
       : userlist.length === 0 ? 
       (<h2 style={{color:'grey', fontSize:'20px'}}>No Data ! </h2>) 
       : (
