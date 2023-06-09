@@ -1,5 +1,6 @@
 import React from 'react'
-import { Button, Form, InputGroup, Modal } from 'react-bootstrap'
+import { Form, InputGroup, Modal } from 'react-bootstrap'
+import ButtonComp from '../../ButtonComp'
 
 const AddTaskModal = ({addModal, setAddModal,setUserFirstName,
     setUserLastName,setMaidenName,setUserAge,setUserEmail,setUserPhone,showMessage,showSuccess,saveUserData}) => {
@@ -88,12 +89,16 @@ const AddTaskModal = ({addModal, setAddModal,setUserFirstName,
               {showMessage}
             </h4>
           ): (<></>)}
-          <Button variant="secondary" onClick={()=>setAddModal(false)}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={saveUserData}>
-            Register
-          </Button>
+          <ButtonComp
+          variant="secondary"
+          buttonName="Close Window"
+          onClickButton={()=>setAddModal(false)}
+          />
+          <ButtonComp
+          variant="primary"
+          buttonName="Save Register"
+          onClickButton={saveUserData}
+          />
         </Modal.Footer>
       </Modal>
     </>

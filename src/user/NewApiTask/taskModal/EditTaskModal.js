@@ -1,5 +1,6 @@
 import React from 'react'
-import { Button, Form, InputGroup, Modal } from 'react-bootstrap'
+import {Form, InputGroup, Modal } from 'react-bootstrap'
+import ButtonComp from '../../ButtonComp'
 
 const EditTaskModal = ({
     editUserModal,
@@ -96,12 +97,19 @@ const EditTaskModal = ({
         </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={editClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={editSaveData}>
+          <ButtonComp
+          variant="secondary"
+          buttonName="Close"
+          onClickButton={editClose}
+          />
+          <ButtonComp
+          variant="primary"
+          buttonName="Save Changes"
+          onClickButton={editSaveData}
+          />
+          {/* <Button variant="primary" onClick={editSaveData}>
             Save Changes
-          </Button>
+          </Button> */}
         </Modal.Footer>
       </Modal> 
     </>

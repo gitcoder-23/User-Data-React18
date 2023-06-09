@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Form, InputGroup, Modal } from 'react-bootstrap';
+import ButtonComp from '../ButtonComp';
 
 const CreateModalPopup = ({
   createModal,
@@ -104,9 +105,14 @@ const CreateModalPopup = ({
         ) : (
           <></>
         )}
-        <Button variant="secondary" onClick={handleCreateClose}>
+        <ButtonComp
+        variant="secondary"
+        buttonName="Close Window"
+        onClickButton={handleCreateClose}
+        />
+        {/* <Button variant="secondary" onClick={handleCreateClose}>
           Close
-        </Button>
+        </Button> */}
         <Button variant="primary" onClick={saveUser}>
           Save User
         </Button>

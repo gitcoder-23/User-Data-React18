@@ -6,7 +6,7 @@ import Button from 'react-bootstrap/Button';
 import ViewTaskModal from './taskModal/ViewTaskModal';
 import AddTaskModal from './taskModal/AddTaskModal';
 import EditTaskModal from './taskModal/EditTaskModal';
-import { Spinner } from 'react-bootstrap';
+import Spinner from 'react-bootstrap/Spinner';
 
 
 const UserAppTask = () => {
@@ -210,16 +210,7 @@ const UserAppTask = () => {
 
       {dadaLoading === true ? (
       // <h2 style={{color:'brown', fontSize:'20px'}}>Data is Loading !...</h2>
-      <Button variant="primary" disabled>
-        <Spinner
-          as="span"
-          animation="grow"
-          size="sm"
-          role="status"
-          aria-hidden="true"
-        />
-        Please wait...
-      </Button>
+      <Spinner animation="border" variant="secondary" />
       ) 
       : userlist.length === 0 ? 
       (<h2 style={{color:'grey', fontSize:'20px'}}>No Data ! </h2>) 
