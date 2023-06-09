@@ -1,12 +1,16 @@
 import axios from 'axios';
 import React, { useEffect } from 'react';
 import { useState } from 'react';
-import { Button, Table } from 'react-bootstrap';
+import { Button, Spinner, Table } from 'react-bootstrap';
+import EmployeeView from './EmployeeView';
 
 const EmployeeList = () => {
   const [employeeDatas, setEmployeeDatas] = useState([]);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
+  // view modal useState
+  const [viewEmployee, setViewEmployee] = useState({});
+  const [showModal,setShowModal] = useState(false);
 
   const getEmployees = () => {
     setLoading(true);
@@ -31,6 +35,11 @@ const EmployeeList = () => {
         }
       });
   };
+  const viewData = (showEmpl)=>{
+    console.log('hi');
+    setViewEmployee(showEmpl);
+    setShowModal(true);
+  }
 
   useEffect(() => {
     // componentDidMount
@@ -41,8 +50,17 @@ const EmployeeList = () => {
 
   return (
     <div className="container">
+      {/* View Button start*/}
+      <EmployeeView
+      viewEmployee={viewEmployee}
+      setShowModal={setShowModal}
+      showModal={showModal}
+      />
+      {/* View Button end*/}
       {loading === true ? (
-        <h1>Loading...</h1>
+       <Spinner animation="border" role="status">
+       <span className="visually-hidden">Loading...</span>
+     </Spinner>
       ) : message ? (
         <h2>{message}</h2>
       ) : (
@@ -68,7 +86,7 @@ const EmployeeList = () => {
                       <th>{eData.email}</th>
                       <th>{eData.phone}</th>
                       <td>
-                        <Button variant="primary">View</Button>{' '}
+                        <Button variant="primary" onClick={()=>viewData(eData)}>View</Button>{' '}
                         <Button variant="secondary">Edit</Button>{' '}
                         <Button variant="danger">Delete</Button>
                       </td>
