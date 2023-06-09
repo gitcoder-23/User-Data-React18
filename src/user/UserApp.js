@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Button, Form, InputGroup, Modal } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import ViewModalPopup from './modalPopups/ViewModalPopup';
 import UserList from './UserList';
 import CreateModalPopup from './modalPopups/CreateModalPopup';
 import EditModalPopup from './modalPopups/EditModalPopup';
-import Menu from "./NewApiTask/Nav/Menu";
 
 const UserApp = () => {
   const apiData = `${process.env.REACT_APP_API}/users`;
@@ -92,7 +91,6 @@ const UserApp = () => {
   console.log('udetails-->', udetails);
   return (
     <div>
-      <Menu/>
       <h1 className="m-4">React User App Using jsonplaceholder Api</h1>{' '}
       <Button variant="success" onClick={() => setCreateModal(true)}>
         Add new
