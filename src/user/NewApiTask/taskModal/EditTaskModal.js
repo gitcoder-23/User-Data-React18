@@ -21,7 +21,7 @@ const EditTaskModal = ({
     <>
       <Modal show={editUserModal} onHide={()=>setEditUserModal(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>User Edit Portal</Modal.Title>
+          <Modal.Title>User Edit</Modal.Title>
         </Modal.Header>
         <Modal.Body>
         <Form>
