@@ -6,6 +6,7 @@ import UserAppTask from './user/NewApiTask/UserAppTask';
 import Home from './user/NewApiTask/Home';
 import EmployeeList from './app_using_jsonserver/employeeCrud/EmployeeList';
 import Menu from './user/NewApiTask/Nav/Menu';
+import EmployeeDetail from './app_using_jsonserver/employeeCrud/EmployeeDetail';
 
 const App = () => {
   return (
@@ -21,6 +22,11 @@ const App = () => {
 
           {/* Employee CRUD App */}
           <Route exact path="/employeelist" element={<EmployeeList />} />
+          <Route
+            exact
+            path="/employeedetail/:eid"
+            element={<EmployeeDetail />}
+          />
         </Routes>
       </div>
     </>

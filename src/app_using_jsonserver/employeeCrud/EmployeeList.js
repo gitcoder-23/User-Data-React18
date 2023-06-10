@@ -3,6 +3,8 @@ import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { Button, Spinner, Table } from 'react-bootstrap';
 import EmployeeView from './EmployeeView';
+import { useNavigate } from 'react-router-dom';
+import SpinnerComponent from '../../components/SpinnerComponent';
 
 const EmployeeList = () => {
   const [employeeDatas, setEmployeeDatas] = useState([]);
@@ -10,7 +12,9 @@ const EmployeeList = () => {
   const [message, setMessage] = useState('');
   // view modal useState
   const [viewEmployee, setViewEmployee] = useState({});
-  const [showModal,setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+
+  const navigate = useNavigate();
 
   const getEmployees = () => {
     setLoading(true);
@@ -35,32 +39,41 @@ const EmployeeList = () => {
         }
       });
   };
-  const viewData = (showEmpl)=>{
+  const viewData = (showEmpl) => {
     console.log('hi');
     setViewEmployee(showEmpl);
     setShowModal(true);
-  }
+  };
 
   useEffect(() => {
     // componentDidMount
     getEmployees();
   }, []);
 
-  console.log('employeeDatas-->', employeeDatas);
+  const viewDetailPage = (empData) => {
+    // console.log('viewDetailPage-->', empData);
+    navigate(`/employeedetail/${empData.id}`);
+  };
 
   return (
     <div className="container">
       {/* View Button start*/}
       <EmployeeView
-      viewEmployee={viewEmployee}
-      setShowModal={setShowModal}
-      showModal={showModal}
+        viewEmployee={viewEmployee}
+        setShowModal={setShowModal}
+        showModal={showModal}
       />
       {/* View Button end*/}
       {loading === true ? (
-       <Spinner animation="border" role="status">
-       <span className="visually-hidden">Loading...</span>
-     </Spinner>
+        <div
+          style={{
+            margin: 'auto 0px',
+            justifyContent: 'center',
+            textAlign: 'center',
+          }}
+        >
+          <SpinnerComponent />
+        </div>
       ) : message ? (
         <h2>{message}</h2>
       ) : (
@@ -86,7 +99,18 @@ const EmployeeList = () => {
                       <th>{eData.email}</th>
                       <th>{eData.phone}</th>
                       <td>
-                        <Button variant="primary" onClick={()=>viewData(eData)}>View</Button>{' '}
+                        <Button
+                          variant="info"
+                          onClick={() => viewDetailPage(eData)}
+                        >
+                          View Page
+                        </Button>{' '}
+                        <Button
+                          variant="primary"
+                          onClick={() => viewData(eData)}
+                        >
+                          View Modal
+                        </Button>{' '}
                         <Button variant="secondary">Edit</Button>{' '}
                         <Button variant="danger">Delete</Button>
                       </td>
