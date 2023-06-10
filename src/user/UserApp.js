@@ -92,9 +92,11 @@ const UserApp = () => {
   return (
     <div>
       <h1 className="m-4">React User App Using jsonplaceholder Api</h1>{' '}
+      <div className="container mb-3">
       <Button variant="success" onClick={() => setCreateModal(true)}>
         Add new
       </Button>
+      </div>
       {/* View Modal Popup Start */}
       <ViewModalPopup
         viewModal={viewModal}

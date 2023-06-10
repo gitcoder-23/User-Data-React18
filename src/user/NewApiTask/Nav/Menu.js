@@ -41,7 +41,6 @@ const Menu = () => {
                 </Dropdown.Menu>
               </Dropdown>
             </ul>
-
             <form className="d-flex" role="search">
               <input
                 className="form-control me-2"

@@ -207,9 +207,11 @@ const UserAppTask = () => {
         <h2 style={{ color: 'grey', fontSize: '20px' }}>No Data ! </h2>
       ) : (
         <>
-          <Button variant="warning" onClick={() => setAddModal(true)}>
+          <div className="container mb-3">
+          <Button variant="outline-primary" onClick={() => setAddModal(true)}>
             Add User
           </Button>{' '}
+          </div>
           <Table striped="columns">
             <thead>
               <tr>
@@ -237,19 +239,19 @@ const UserAppTask = () => {
                       <th>{datalist.phone}</th>
                       <td>
                         <Button
-                          variant="primary"
+                          variant="outline-success"
                           onClick={() => viewData(datalist)}
                         >
                           View
                         </Button>{' '}
                         <Button
-                          variant="secondary"
+                          variant="outline-secondary"
                           onClick={() => editData(datalist)}
                         >
                           Edit
                         </Button>{' '}
                         <Button
-                          variant="danger"
+                          variant="outline-danger"
                           onClick={() => deleteData(dataindex)}
                         >
                           Delete
