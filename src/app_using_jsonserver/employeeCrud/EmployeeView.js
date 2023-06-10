@@ -1,7 +1,8 @@
 import React from 'react';
 import { Button, Card, Modal } from 'react-bootstrap';
 
-const EmployeeView = ({showModal,setShowModal,viewEmployee}) => {
+const EmployeeView = (props) => {
+  const {showModal,setShowModal,viewEmployee} = props;
   return (
     <div>
     <Modal show={showModal} onHide={()=>setShowModal(false)}>
