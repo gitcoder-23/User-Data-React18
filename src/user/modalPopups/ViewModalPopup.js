@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal } from 'react-bootstrap';
-import ButtonComp from '../ButtonComp';
+import ButtonComp from '../../components/ButtonComp';
 
 const ViewModalPopup = (props) => {
   const { viewModal, handleClose, showData } = props;
@@ -17,9 +17,9 @@ const ViewModalPopup = (props) => {
       </Modal.Body>
       <Modal.Footer>
         <ButtonComp
-        variant="secondary"
-        onClickButton={handleClose}
-        buttonName="Close"
+          variant="secondary"
+          onClickButton={handleClose}
+          buttonName="Close"
         />
       </Modal.Footer>
     </Modal>

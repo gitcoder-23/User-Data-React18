@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Form, InputGroup, Modal } from 'react-bootstrap';
-import ButtonComp from '../ButtonComp';
+import ButtonComp from '../../components/ButtonComp';
 
 const CreateModalPopup = ({
   createModal,
@@ -106,9 +106,9 @@ const CreateModalPopup = ({
           <></>
         )}
         <ButtonComp
-        variant="secondary"
-        buttonName="Close Window"
-        onClickButton={handleCreateClose}
+          variant="secondary"
+          buttonName="Close Window"
+          onClickButton={handleCreateClose}
         />
         {/* <Button variant="secondary" onClick={handleCreateClose}>
           Close

@@ -5,6 +5,7 @@ import { Button, Spinner, Table } from 'react-bootstrap';
 import EmployeeView from './EmployeeView';
 import { useNavigate } from 'react-router-dom';
 import SpinnerComponent from '../../components/SpinnerComponent';
+import ButtonComp from '../../components/ButtonComp';
 
 const EmployeeList = () => {
   const [employeeDatas, setEmployeeDatas] = useState([]);
@@ -55,6 +56,11 @@ const EmployeeList = () => {
     navigate(`/employeedetail/${empData.id}`);
   };
 
+  const viewEmpDetail = (empRes) => {
+    // console.log('viewEmpDetail-->', empRes);
+    navigate(`/employee/detail/${empRes.id}`);
+  };
+
   return (
     <div className="container">
       {/* View Button start*/}
@@ -99,6 +105,17 @@ const EmployeeList = () => {
                       <th>{eData.email}</th>
                       <th>{eData.phone}</th>
                       <td>
+                        <Button
+                          variant="warning"
+                          onClick={() => viewEmpDetail(eData)}
+                        >
+                          View Employee
+                        </Button>{' '}
+                        {/* <ButtonComp
+                          variant="warning"
+                          buttonName="View Employee"
+                          onClickButton={viewEmpDetail(eData)}
+                        />{' '} */}
                         <Button
                           variant="info"
                           onClick={() => viewDetailPage(eData)}
