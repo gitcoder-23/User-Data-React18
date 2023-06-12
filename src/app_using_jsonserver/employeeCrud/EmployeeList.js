@@ -6,6 +6,8 @@ import EmployeeView from './EmployeeView';
 import { useNavigate } from 'react-router-dom';
 import SpinnerComponent from '../../components/SpinnerComponent';
 import ButtonComp from '../../components/ButtonComp';
+import EmployeeSearch from './EmployeeSearch';
+// Search
 
 const EmployeeList = () => {
   const [employeeDatas, setEmployeeDatas] = useState([]);
@@ -14,6 +16,9 @@ const EmployeeList = () => {
   // view modal useState
   const [viewEmployee, setViewEmployee] = useState({});
   const [showModal, setShowModal] = useState(false);
+  // Search
+  const [search, setSearch] = useState('');
+  const [query, setQuery] = useState('');
 
   const navigate = useNavigate();
 
@@ -61,6 +66,18 @@ const EmployeeList = () => {
     navigate(`/employee/detail/${empRes.id}`);
   };
 
+  // Search
+  const getSearch = (e) => {
+    e.preventDefault();
+    setQuery(search);
+    // to reset after search button click
+    setSearch('');
+  };
+
+  const updateSearch = (evt) => {
+    setSearch(evt.target.value);
+  };
+
   return (
     <div className="container">
       {/* View Button start*/}
@@ -70,6 +87,14 @@ const EmployeeList = () => {
         showModal={showModal}
       />
       {/* View Button end*/}
+
+      {/* Search Start */}
+      <EmployeeSearch
+        getSearch={getSearch}
+        updateSearch={updateSearch}
+        search={search}
+      />
+      {/* Search End */}
       {loading === true ? (
         <div
           style={{
@@ -96,45 +121,60 @@ const EmployeeList = () => {
             </thead>
 
             {employeeDatas &&
-              (employeeDatas || []).map((eData, index) => {
-                return (
-                  <tbody key={eData.id}>
-                    <tr>
-                      <td>{index + 1}</td>
-                      <td>{eData.employeename}</td>
-                      <th>{eData.email}</th>
-                      <th>{eData.phone}</th>
-                      <td>
-                        <Button
-                          variant="warning"
-                          onClick={() => viewEmpDetail(eData)}
-                        >
-                          View Employee
-                        </Button>{' '}
-                        {/* <ButtonComp
+              (employeeDatas || [])
+                .filter((val) => {
+                  // console.log('val-->', val);
+                  if (search === '') {
+                    return val;
+                  } else if (
+                    val.employeename
+                      .toLowerCase()
+                      .includes(search.toLowerCase())
+                  ) {
+                    return val;
+                  } else if (val.search) {
+                    return val;
+                  }
+                })
+                ?.map((eData, index) => {
+                  return (
+                    <tbody key={eData.id}>
+                      <tr>
+                        <td>{index + 1}</td>
+                        <td>{eData.employeename}</td>
+                        <th>{eData.email}</th>
+                        <th>{eData.phone}</th>
+                        <td>
+                          <Button
+                            variant="warning"
+                            onClick={() => viewEmpDetail(eData)}
+                          >
+                            View Employee
+                          </Button>{' '}
+                          {/* <ButtonComp
                           variant="warning"
                           buttonName="View Employee"
                           onClickButton={viewEmpDetail(eData)}
                         />{' '} */}
-                        <Button
-                          variant="info"
-                          onClick={() => viewDetailPage(eData)}
-                        >
-                          View Page
-                        </Button>{' '}
-                        <Button
-                          variant="primary"
-                          onClick={() => viewData(eData)}
-                        >
-                          View Modal
-                        </Button>{' '}
-                        <Button variant="secondary">Edit</Button>{' '}
-                        <Button variant="danger">Delete</Button>
-                      </td>
-                    </tr>
-                  </tbody>
-                );
-              })}
+                          <Button
+                            variant="info"
+                            onClick={() => viewDetailPage(eData)}
+                          >
+                            View Page
+                          </Button>{' '}
+                          <Button
+                            variant="primary"
+                            onClick={() => viewData(eData)}
+                          >
+                            View Modal
+                          </Button>{' '}
+                          <Button variant="secondary">Edit</Button>{' '}
+                          <Button variant="danger">Delete</Button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  );
+                })}
           </Table>
         </>
       )}
