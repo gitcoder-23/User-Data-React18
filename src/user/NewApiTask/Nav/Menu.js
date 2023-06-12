@@ -41,17 +41,19 @@ const Menu = () => {
                 </Dropdown.Menu>
               </Dropdown>
             </ul>
-            <form className="d-flex" role="search">
+            {/* <form onSubmit={getSearch} className="d-flex" role="search">
               <input
                 className="form-control me-2"
                 type="search"
                 placeholder="Search"
                 aria-label="Search"
+                value={search}
+                onChange={updateSearch}
               />
               <button className="btn btn-outline-success" type="submit">
                 Search
               </button>
-            </form>
+            </form> */}
           </div>
         </div>
       </Nav>
