@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { Button, Spinner, Table } from 'react-bootstrap';
 import EmployeeView from './EmployeeView';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import SpinnerComponent from '../../components/SpinnerComponent';
 import ButtonComp from '../../components/ButtonComp';
 import EmployeeSearch from './EmployeeSearch';
@@ -86,15 +86,24 @@ const EmployeeList = () => {
         showModal={showModal}
       />
       {/* View Button end*/}
+      <div className="row mb-4">
+        <div className="col-md-10">
+          {/* Search Start */}
+          <EmployeeSearch
+            getSearch={getSearch}
+            updateSearch={updateSearch}
+            searchInput={searchInput}
+          />
 
-      {/* Search Start */}
-      <EmployeeSearch
-        getSearch={getSearch}
-        updateSearch={updateSearch}
-        searchInput={searchInput}
-      />
+          {/* Search End */}
+        </div>
+        <div className="col-md-2">
+          <Link className="btn btn-primary" to="/employee/add">
+            Add Employee
+          </Link>{' '}
+        </div>
+      </div>
 
-      {/* Search End */}
       {loading === true ? (
         <div
           style={{
@@ -116,6 +125,7 @@ const EmployeeList = () => {
                 <th>Employee Name</th>
                 <th>Email</th>
                 <th>Phone</th>
+                <th>Gender</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -142,7 +152,8 @@ const EmployeeList = () => {
                     return searcedValue;
                   }
                 })
-                ?.map((eData, index) => {
+                ?.reverse()
+                .map((eData, index) => {
                   return (
                     <tbody key={eData.id}>
                       <tr>
@@ -150,6 +161,7 @@ const EmployeeList = () => {
                         <td>{eData.employeename}</td>
                         <th>{eData.email}</th>
                         <th>{eData.phone}</th>
+                        <th>{eData.gender}</th>
                         <td>
                           <Button
                             variant="warning"

@@ -8,6 +8,7 @@ import EmployeeList from './app_using_jsonserver/employeeCrud/EmployeeList';
 import Menu from './user/NewApiTask/Nav/Menu';
 import EmployeeDetail from './app_using_jsonserver/employeeCrud/EmployeeDetail';
 import EmployeeNewDetail from './app_using_jsonserver/employeeCrud/EmployeeNewDetail';
+import EmployeeAdd from './app_using_jsonserver/employeeCrud/EmployeeAdd';
 
 const App = () => {
   return (
@@ -33,6 +34,7 @@ const App = () => {
             path="/employee/detail/:empid"
             element={<EmployeeNewDetail />}
           />
+          <Route exact path="/employee/add" element={<EmployeeAdd />} />
         </Routes>
       </div>
     </>
