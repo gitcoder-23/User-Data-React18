@@ -18,8 +18,7 @@ const EmployeeList = () => {
   const [viewEmployee, setViewEmployee] = useState({});
   const [showModal, setShowModal] = useState(false);
   // Search
-  const [search, setSearch] = useState('');
-  const [query, setQuery] = useState('');
+  const [searchInput, setSearchInput] = useState('');
 
   const navigate = useNavigate();
 
@@ -70,13 +69,12 @@ const EmployeeList = () => {
   // Search
   const getSearch = (e) => {
     e.preventDefault();
-    setQuery(search);
     // to reset after search button click
-    setSearch('');
+    setSearchInput('');
   };
 
   const updateSearch = (evt) => {
-    setSearch(evt.target.value);
+    setSearchInput(evt.target.value);
   };
 
   return (
@@ -93,8 +91,9 @@ const EmployeeList = () => {
       <EmployeeSearch
         getSearch={getSearch}
         updateSearch={updateSearch}
-        search={search}
+        searchInput={searchInput}
       />
+
       {/* Search End */}
       {loading === true ? (
         <div
@@ -123,18 +122,24 @@ const EmployeeList = () => {
 
             {employeeDatas &&
               (employeeDatas || [])
-                .filter((val) => {
+                .filter((searcedValue) => {
                   // console.log('val-->', val);
-                  if (search === '') {
-                    return val;
+                  if (searchInput === '') {
+                    return searcedValue;
                   } else if (
-                    val.employeename
+                    searcedValue.employeename
                       .toLowerCase()
-                      .includes(search.toLowerCase())
+                      .includes(searchInput.toLowerCase())
                   ) {
-                    return val;
-                  } else if (val.search) {
-                    return val;
+                    return searcedValue;
+                  } else if (
+                    searcedValue.email
+                      .toLowerCase()
+                      .includes(searchInput.toLowerCase())
+                  ) {
+                    return searcedValue;
+                  } else if (searcedValue.searchInput) {
+                    return searcedValue;
                   }
                 })
                 ?.map((eData, index) => {

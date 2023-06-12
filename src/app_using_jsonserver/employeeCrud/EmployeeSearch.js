@@ -1,6 +1,6 @@
 import React from 'react';
 
-const EmployeeSearch = ({ getSearch, updateSearch, search }) => {
+const EmployeeSearch = ({ getSearch, updateSearch, searchInput }) => {
   return (
     <div className="col-md-5">
       <form onSubmit={getSearch} className="search-form">
@@ -15,7 +15,7 @@ const EmployeeSearch = ({ getSearch, updateSearch, search }) => {
             fontSize: '14px',
           }}
           type="text"
-          value={search}
+          value={searchInput}
           onChange={updateSearch}
         />
 
