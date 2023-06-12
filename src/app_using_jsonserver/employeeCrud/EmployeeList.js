@@ -87,7 +87,7 @@ const EmployeeList = () => {
       />
       {/* View Button end*/}
       <div className="row mb-4">
-        <div className="col-md-10">
+        <div className="col-md-8">
           {/* Search Start */}
           <EmployeeSearch
             getSearch={getSearch}
@@ -97,9 +97,12 @@ const EmployeeList = () => {
 
           {/* Search End */}
         </div>
-        <div className="col-md-2">
+        <div className="col-md-4">
           <Link className="btn btn-primary" to="/employee/add">
             Add Employee
+          </Link>{' '}
+          <Link className="btn btn-primary" to="/employee/add">
+            Add New Employee
           </Link>{' '}
         </div>
       </div>
@@ -118,7 +121,8 @@ const EmployeeList = () => {
         <h2>{message}</h2>
       ) : (
         <>
-          <Table striped="columns">
+        <div className="container my-4">
+        <Table striped="columns">
             <thead>
               <tr>
                 <th>ID</th>
@@ -194,6 +198,8 @@ const EmployeeList = () => {
                   );
                 })}
           </Table>
+        </div>
+          
         </>
       )}
     </div>
