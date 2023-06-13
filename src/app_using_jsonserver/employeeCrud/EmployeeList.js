@@ -1,13 +1,11 @@
 import axios from 'axios';
 import React, { useEffect } from 'react';
 import { useState } from 'react';
-import { Button, Spinner, Table } from 'react-bootstrap';
+import { Button, Table } from 'react-bootstrap';
 import EmployeeView from './EmployeeView';
 import { Link, useNavigate } from 'react-router-dom';
 import SpinnerComponent from '../../components/SpinnerComponent';
-import ButtonComp from '../../components/ButtonComp';
 import EmployeeSearch from './EmployeeSearch';
-import Menu from '../../user/NewApiTask/Nav/Menu';
 // Search
 
 const EmployeeList = () => {
@@ -136,24 +134,29 @@ const EmployeeList = () => {
 
             {employeeDatas &&
               (employeeDatas || [])
-                .filter((searcedValue) => {
+                .filter((searchedValue) => {
                   // console.log('val-->', val);
                   if (searchInput === '') {
-                    return searcedValue;
+                    return searchedValue;
                   } else if (
-                    searcedValue.employeename
+                    searchedValue.employeename
                       .toLowerCase()
                       .includes(searchInput.toLowerCase())
                   ) {
-                    return searcedValue;
+                    return searchedValue;
                   } else if (
-                    searcedValue.email
+                    searchedValue.email
                       .toLowerCase()
                       .includes(searchInput.toLowerCase())
                   ) {
-                    return searcedValue;
-                  } else if (searcedValue.searchInput) {
-                    return searcedValue;
+                    return searchedValue;
+                  } else if (
+                    searchedValue.phone
+                    .includes(searchInput)
+                  ) {
+                    return searchedValue;
+                  } else if (searchedValue.searchInput) {
+                    return searchedValue;
                   }
                 })
                 ?.reverse()
