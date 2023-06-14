@@ -29,8 +29,7 @@ const EmployeeAdd = () => {
       setTimeout(() => {
         setMessage('');
       }, 2000);
-    } 
-    else {
+    } else {
       const formData = {
         id: Date.now(),
         employeename: employeeState.empName,
@@ -47,10 +46,12 @@ const EmployeeAdd = () => {
             setError(false);
             setMessage('Employee added success!');
             setTimeout(() => {
-              setEmployeeState({empName: '',
-              empEmail: '',
-              empPhone: '',
-              empGender: '',});
+              setEmployeeState({
+                empName: '',
+                empEmail: '',
+                empPhone: '',
+                empGender: '',
+              });
               setMessage('');
               navigate('/employeelist');
             }, 1000);

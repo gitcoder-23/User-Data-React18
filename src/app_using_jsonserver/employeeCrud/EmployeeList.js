@@ -75,23 +75,28 @@ const EmployeeList = () => {
     setSearchInput(evt.target.value);
   };
 
-  const delData = (delId)=>{
+  const delData = (delId) => {
     // console.log('del-->',del);
-    if(window.confirm('Do you want to remove data from the list ?')){
-    axios.delete(`${process.env.REACT_APP_JSON_API}/employee/${delId}`)
-    .then((response)=>{
-      console.log('response-->',response);
+    if (window.confirm('Do you want to remove data from the list ?')) {
+      axios
+        .delete(`${process.env.REACT_APP_JSON_API}/employee/${delId}`)
+        .then((response) => {
+          console.log('response-->', response);
 
-      getEmployees();
-    }).catch((delerr)=>{
-      console.log('delerr-->',delerr);
-    })
+          getEmployees();
+        })
+        .catch((delerr) => {
+          console.log('delerr-->', delerr);
+        });
     }
   };
-  const editData = (empData)=>{
-    console.log('empData-->',empData);
-    navigate(`/employee/edit/${empData.id}`);
-  }
+  const editData = (empData) => {
+    console.log('empData-->', empData);
+
+    navigate(`/employee/edit/${empData.id}`, {
+      state: { singleUser: empData },
+    });
+  };
 
   return (
     <div className="container">
@@ -137,90 +142,96 @@ const EmployeeList = () => {
         <h2>{message}</h2>
       ) : (
         <>
-        <div className="container my-4">
-        <Table striped="columns">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Employee Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Gender</th>
-                <th>Action</th>
-              </tr>
-            </thead>
+          <div className="container my-4">
+            <Table striped="columns">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Employee Name</th>
+                  <th>Email</th>
+                  <th>Phone</th>
+                  <th>Gender</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
 
-            {employeeDatas &&
-              (employeeDatas || [])
-                .filter((searchedValue) => {
-                  // console.log('val-->', val);
-                  if (searchInput === '') {
-                    return searchedValue;
-                  } else if (
-                    searchedValue.employeename
-                      .toLowerCase()
-                      .includes(searchInput.toLowerCase())
-                  ) {
-                    return searchedValue;
-                  } else if (
-                    searchedValue.email
-                      .toLowerCase()
-                      .includes(searchInput.toLowerCase())
-                  ) {
-                    return searchedValue;
-                  } else if (
-                    searchedValue.phone
-                    .includes(searchInput)
-                  ) {
-                    return searchedValue;
-                  } else if (searchedValue.searchInput) {
-                    return searchedValue;
-                  }
-                })
-                ?.reverse()
-                .map((eData, index) => {
-                  return (
-                    <tbody key={eData.id}>
-                      <tr>
-                        <td>{index + 1}</td>
-                        <td>{eData.employeename}</td>
-                        <th>{eData.email}</th>
-                        <th>{eData.phone}</th>
-                        <th>{eData.gender}</th>
-                        <td>
-                          <Button
-                            variant="warning"
-                            onClick={() => viewEmpDetail(eData)}
-                          >
-                            View Employee
-                          </Button>{' '}
-                          {/* <ButtonComp
+              {employeeDatas &&
+                (employeeDatas || [])
+                  .filter((searchedValue) => {
+                    // console.log('val-->', val);
+                    if (searchInput === '') {
+                      return searchedValue;
+                    } else if (
+                      searchedValue.employeename
+                        .toLowerCase()
+                        .includes(searchInput.toLowerCase())
+                    ) {
+                      return searchedValue;
+                    } else if (
+                      searchedValue.email
+                        .toLowerCase()
+                        .includes(searchInput.toLowerCase())
+                    ) {
+                      return searchedValue;
+                    } else if (searchedValue.phone.includes(searchInput)) {
+                      return searchedValue;
+                    } else if (searchedValue.searchInput) {
+                      return searchedValue;
+                    }
+                  })
+                  ?.reverse()
+                  .map((eData, index) => {
+                    return (
+                      <tbody key={eData.id}>
+                        <tr>
+                          <td>{index + 1}</td>
+                          <td>{eData.employeename}</td>
+                          <th>{eData.email}</th>
+                          <th>{eData.phone}</th>
+                          <th>{eData.gender}</th>
+                          <td>
+                            <Button
+                              variant="warning"
+                              onClick={() => viewEmpDetail(eData)}
+                            >
+                              View Employee
+                            </Button>{' '}
+                            {/* <ButtonComp
                           variant="warning"
                           buttonName="View Employee"
                           onClickButton={viewEmpDetail(eData)}
                         />{' '} */}
-                          <Button
-                            variant="info"
-                            onClick={() => viewDetailPage(eData)}
-                          >
-                            View Page
-                          </Button>{' '}
-                          <Button
-                            variant="primary"
-                            onClick={() => viewData(eData)}
-                          >
-                            View Modal
-                          </Button>{' '}
-                          <Button variant="secondary" onClick={()=>editData(eData)}>Edit</Button>{' '}
-                          <Button variant="danger" onClick={()=>delData(eData.id)}>Delete</Button>
-                        </td>
-                      </tr>
-                    </tbody>
-                  );
-                })}
-          </Table>
-        </div>
-          
+                            <Button
+                              variant="info"
+                              onClick={() => viewDetailPage(eData)}
+                            >
+                              View Page
+                            </Button>{' '}
+                            <Button
+                              variant="primary"
+                              onClick={() => viewData(eData)}
+                            >
+                              View Modal
+                            </Button>{' '}
+                            <Button
+                              variant="secondary"
+                              onClick={() => editData(eData)}
+                            >
+                              Edit
+                            </Button>{' '}
+                            <Button
+                              variant="danger"
+                              onClick={() => delData(eData.id)}
+                            >
+                              Delete
+                            </Button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    );
+                  })}
+            </Table>
+          </div>
         </>
       )}
     </div>
