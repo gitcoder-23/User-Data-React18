@@ -56,7 +56,7 @@ const EmployeeEdit = () => {
                   setEmployeeEditState({
                     ...employeeEditState,
                     empName: e.target.value,
-                  })
+                  }) 
                 }
               />
             </Form.Group>
