@@ -81,13 +81,17 @@ const EmployeeList = () => {
     axios.delete(`${process.env.REACT_APP_JSON_API}/employee/${delId}`)
     .then((response)=>{
       console.log('response-->',response);
-      
+
       getEmployees();
     }).catch((delerr)=>{
       console.log('delerr-->',delerr);
     })
     }
   };
+  const editData = (empData)=>{
+    console.log('empData-->',empData);
+    navigate(`/employee/edit/${empData.id}`);
+  }
 
   return (
     <div className="container">
@@ -207,7 +211,7 @@ const EmployeeList = () => {
                           >
                             View Modal
                           </Button>{' '}
-                          <Button variant="secondary">Edit</Button>{' '}
+                          <Button variant="secondary" onClick={()=>editData(eData)}>Edit</Button>{' '}
                           <Button variant="danger" onClick={()=>delData(eData.id)}>Delete</Button>
                         </td>
                       </tr>

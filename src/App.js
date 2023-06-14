@@ -10,6 +10,7 @@ import EmployeeDetail from './app_using_jsonserver/employeeCrud/EmployeeDetail';
 import EmployeeNewDetail from './app_using_jsonserver/employeeCrud/EmployeeNewDetail';
 import EmployeeAdd from './app_using_jsonserver/employeeCrud/EmployeeAdd';
 import EmployeeAddTask from './app_using_jsonserver/employeeCrud/EmployeeAddTask';
+import EmployeeEdit from './app_using_jsonserver/employeeCrud/EmployeeEdit';
 
 const App = () => {
   return (
@@ -34,6 +35,11 @@ const App = () => {
             exact
             path="/employee/detail/:empid"
             element={<EmployeeNewDetail />}
+          />
+          <Route
+            exact
+            path="/employee/edit/:empid"
+            element={<EmployeeEdit />}
           />
           <Route exact path="/employee/add" element={<EmployeeAdd />} />
           <Route exact path="/employee/addtask" element={<EmployeeAddTask />} />
