@@ -75,6 +75,20 @@ const EmployeeList = () => {
     setSearchInput(evt.target.value);
   };
 
+  const delData = (delId)=>{
+    // console.log('del-->',del);
+    if(window.confirm('Do you want to remove data from the list ?')){
+    axios.delete(`${process.env.REACT_APP_JSON_API}/employee/${delId}`)
+    .then((response)=>{
+      console.log('response-->',response);
+      
+      getEmployees();
+    }).catch((delerr)=>{
+      console.log('delerr-->',delerr);
+    })
+    }
+  };
+
   return (
     <div className="container">
       {/* View Button start*/}
@@ -99,7 +113,7 @@ const EmployeeList = () => {
           <Link className="btn btn-primary" to="/employee/add">
             Add Employee
           </Link>{' '}
-          <Link className="btn btn-primary" to="/employee/add">
+          <Link className="btn btn-outline-success" to="/employee/addtask">
             Add New Employee
           </Link>{' '}
         </div>
@@ -194,7 +208,7 @@ const EmployeeList = () => {
                             View Modal
                           </Button>{' '}
                           <Button variant="secondary">Edit</Button>{' '}
-                          <Button variant="danger">Delete</Button>
+                          <Button variant="danger" onClick={()=>delData(eData.id)}>Delete</Button>
                         </td>
                       </tr>
                     </tbody>

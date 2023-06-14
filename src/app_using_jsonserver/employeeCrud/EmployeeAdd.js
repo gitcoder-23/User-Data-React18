@@ -29,7 +29,8 @@ const EmployeeAdd = () => {
       setTimeout(() => {
         setMessage('');
       }, 2000);
-    } else {
+    } 
+    else {
       const formData = {
         id: Date.now(),
         employeename: employeeState.empName,
