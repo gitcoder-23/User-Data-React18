@@ -16,6 +16,8 @@ const EmployeeEdit = () => {
     empPhone: state?.singleUser.phone || '',
     // empGender: '',
   });
+  const [showMessage, setShowMessage] = useState('');
+  const [showError, setShowError] = useState(false);
 
   useEffect(() => {}, [state?.singleUser, empeid]);
 
@@ -31,11 +33,23 @@ const EmployeeEdit = () => {
       .then((eData) => {
         console.log('edit->', eData);
         if (eData.status === 200) {
-          navigate('/employeelist');
+          setShowError(false)
+          setShowMessage('Edited successfully.')
+          setTimeout(()=>{
+            setShowMessage('')
+            navigate('/employeelist');
+          },2000);
         }
       })
       .catch((errEdit) => {
-        console.log('errEdit->', errEdit);
+        if (errEdit.response.status === 404) {
+          setShowError(true);
+          setShowMessage('Something went wrong !')
+          console.log('errEdit->', errEdit);
+          setTimeout(()=>{
+            setShowMessage('')
+          },2000);
+        }
       });
   };
 
@@ -121,18 +135,18 @@ const EmployeeEdit = () => {
                 Submit
               </Button>{' '}
             </div>
-            {/* <div className="col-md-8">
-            {message ? (
+            <div className="col-md-8">
+            {showMessage ? (
               <h2
-                className={error === true ? 'text-danger' : 'text-success'}
+                className={showError === true ? 'text-danger' : 'text-success'}
                 style={{ fontSize: '20px' }}
               >
-                {message}
+                {showMessage}
               </h2>
             ) : (
               <></>
             )}
-          </div> */}
+          </div>
           </div>
         </Form>
       </div>
