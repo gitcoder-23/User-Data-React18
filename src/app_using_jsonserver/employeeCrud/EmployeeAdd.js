@@ -14,6 +14,7 @@ const EmployeeAdd = () => {
 
   const [message, setMessage] = useState('');
   const [error, setError] = useState(false);
+  const [onBtnClick, setOnBtnClick] = useState(false);
 
   const addEmployee = (evt) => {
     evt.preventDefault();
@@ -25,9 +26,11 @@ const EmployeeAdd = () => {
       !employeeState.empGender
     ) {
       setError(true);
+      setOnBtnClick(true);
       setMessage('Please fill all the fields');
       setTimeout(() => {
         setMessage('');
+        setOnBtnClick(false);
       }, 2000);
     } else {
       const formData = {
@@ -37,6 +40,7 @@ const EmployeeAdd = () => {
         phone: employeeState.empPhone,
         gender: employeeState.empGender,
       };
+      setOnBtnClick(false);
 
       axios
         .post(`${process.env.REACT_APP_JSON_API}/employee`, formData)
@@ -90,6 +94,11 @@ const EmployeeAdd = () => {
                   })
                 }
               />
+              {employeeState.empName === '' && onBtnClick === true ? (
+                <span style={{ color: 'red' }}>Enter employee name</span>
+              ) : (
+                <></>
+              )}
             </Form.Group>
             <Form.Group md="4" style={{ marginBottom: '20px' }}>
               <Form.Label>Email</Form.Label>
