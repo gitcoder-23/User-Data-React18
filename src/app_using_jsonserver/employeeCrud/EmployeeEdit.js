@@ -14,43 +14,75 @@ const EmployeeEdit = () => {
     empName: state?.singleUser.employeename || '',
     empEmail: state?.singleUser.email || '',
     empPhone: state?.singleUser.phone || '',
-    // empGender: '',
+    empGender: state?.singleUser.gender || '',
   });
   const [showMessage, setShowMessage] = useState('');
   const [showError, setShowError] = useState(false);
 
   useEffect(() => {}, [state?.singleUser, empeid]);
 
+  const genderData = [
+    {
+      id: 1,
+      value: 'male',
+      label: 'Male',
+    },
+    {
+      id: 2,
+      value: 'female',
+      label: 'Female',
+    },
+    {
+      id: 3,
+      value: 'others',
+      label: 'Others',
+    },
+  ];
+
   const editEmployee = (e) => {
     e.preventDefault();
-    const formData = {
-      employeename: employeeEditState.empName,
-      email: employeeEditState.empEmail,
-      phone: employeeEditState.empPhone,
-    };
-    axios
-      .put(`${process.env.REACT_APP_JSON_API}/employee/${empeid}`, formData)
-      .then((eData) => {
-        console.log('edit->', eData);
-        if (eData.status === 200) {
-          setShowError(false)
-          setShowMessage('Edited successfully.')
-          setTimeout(()=>{
-            setShowMessage('')
-            navigate('/employeelist');
-          },2000);
-        }
-      })
-      .catch((errEdit) => {
-        if (errEdit.response.status === 404) {
-          setShowError(true);
-          setShowMessage('Something went wrong !')
-          console.log('errEdit->', errEdit);
-          setTimeout(()=>{
-            setShowMessage('')
-          },2000);
-        }
-      });
+    if (
+      !employeeEditState.empName ||
+      !employeeEditState.empEmail ||
+      !employeeEditState.empPhone ||
+      !employeeEditState.empGender
+    ) {
+      setShowError(true);
+      setShowMessage('Please fill all the fields');
+      setTimeout(() => {
+        setShowMessage('');
+      }, 2000);
+    } else {
+      const formData = {
+        employeename: employeeEditState.empName,
+        email: employeeEditState.empEmail,
+        phone: employeeEditState.empPhone,
+        gender: employeeEditState.empGender,
+      };
+      axios
+        .put(`${process.env.REACT_APP_JSON_API}/employee/${empeid}`, formData)
+        .then((eData) => {
+          console.log('edit->', eData);
+          if (eData.status === 200) {
+            setShowError(false);
+            setShowMessage('Edited successfully.');
+            setTimeout(() => {
+              setShowMessage('');
+              navigate('/employeelist');
+            }, 2000);
+          }
+        })
+        .catch((errEdit) => {
+          if (errEdit.response.status === 404) {
+            setShowError(true);
+            setShowMessage('Something went wrong !');
+            console.log('errEdit->', errEdit);
+            setTimeout(() => {
+              setShowMessage('');
+            }, 2000);
+          }
+        });
+    }
   };
 
   return (
@@ -70,7 +102,7 @@ const EmployeeEdit = () => {
                   setEmployeeEditState({
                     ...employeeEditState,
                     empName: e.target.value,
-                  }) 
+                  })
                 }
               />
             </Form.Group>
@@ -110,24 +142,28 @@ const EmployeeEdit = () => {
               />
             </Form.Group>
 
-            {/* <Form.Group md="4" style={{ marginBottom: '20px' }}>
+            <Form.Group md="4" style={{ marginBottom: '20px' }}>
               <Form.Label>Gender</Form.Label>
+
               <Form.Select
-                aria-label="Default select example"
-                // value={employeeState.empGender}
-                // onChange={(e) =>
-                //   setEmployeeState({
-                //     ...employeeState,
-                //     empGender: e.target.value,
-                //   })
-                // }
+                id="gender"
+                name="gender"
+                value={employeeEditState.empGender}
+                onChange={(e) =>
+                  setEmployeeEditState({
+                    ...employeeEditState,
+                    empGender: e.target.value,
+                  })
+                }
               >
-                <option value="">-- Select One --</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="others">Others</option>
+                <option value="">--Select option--</option>
+                {genderData.map((gData, i) => (
+                  <option key={gData.id} value={gData.value}>
+                    {gData.label}
+                  </option>
+                ))}
               </Form.Select>
-            </Form.Group> */}
+            </Form.Group>
           </div>
           <div className="row">
             <div className="col-md-4">
@@ -136,17 +172,19 @@ const EmployeeEdit = () => {
               </Button>{' '}
             </div>
             <div className="col-md-8">
-            {showMessage ? (
-              <h2
-                className={showError === true ? 'text-danger' : 'text-success'}
-                style={{ fontSize: '20px' }}
-              >
-                {showMessage}
-              </h2>
-            ) : (
-              <></>
-            )}
-          </div>
+              {showMessage ? (
+                <h2
+                  className={
+                    showError === true ? 'text-danger' : 'text-success'
+                  }
+                  style={{ fontSize: '20px' }}
+                >
+                  {showMessage}
+                </h2>
+              ) : (
+                <></>
+              )}
+            </div>
           </div>
         </Form>
       </div>
