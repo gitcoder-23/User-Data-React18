@@ -18,6 +18,7 @@ const EmployeeEdit = () => {
   });
   const [showMessage, setShowMessage] = useState('');
   const [showError, setShowError] = useState(false);
+  const [btnClick, setBtnClick] = useState(false);
 
   useEffect(() => {}, [state?.singleUser, empeid]);
 
@@ -48,9 +49,11 @@ const EmployeeEdit = () => {
       !employeeEditState.empGender
     ) {
       setShowError(true);
+      setBtnClick(true);
       setShowMessage('Please fill all the fields');
       setTimeout(() => {
         setShowMessage('');
+        setBtnClick(false);
       }, 2000);
     } else {
       const formData = {
@@ -59,6 +62,7 @@ const EmployeeEdit = () => {
         phone: employeeEditState.empPhone,
         gender: employeeEditState.empGender,
       };
+      setBtnClick(false);
       axios
         .put(`${process.env.REACT_APP_JSON_API}/employee/${empeid}`, formData)
         .then((eData) => {
@@ -105,6 +109,11 @@ const EmployeeEdit = () => {
                   })
                 }
               />
+              {
+                !employeeEditState.empName && btnClick === true ? (
+                  <span style={{color : 'red'}}>Name field is empty !</span>
+                ):(<></>)
+              }
             </Form.Group>
             <Form.Group md="4" style={{ marginBottom: '20px' }}>
               <Form.Label>Email</Form.Label>
@@ -124,6 +133,11 @@ const EmployeeEdit = () => {
                   }
                 />
               </InputGroup>
+              {
+                !employeeEditState.empEmail && btnClick === true ? (
+                  <span style={{color : 'red'}}>Email field is empty !</span>
+                ):(<></>)
+              }
             </Form.Group>
             <Form.Group md="4" style={{ marginBottom: '20px' }}>
               <Form.Label>Phone</Form.Label>
@@ -140,6 +154,11 @@ const EmployeeEdit = () => {
                   })
                 }
               />
+              {
+                !employeeEditState.empPhone && btnClick === true ? (
+                  <span style={{color : 'red'}}>Contact field is empty !</span>
+                ):(<></>)
+              }
             </Form.Group>
 
             <Form.Group md="4" style={{ marginBottom: '20px' }}>
@@ -163,6 +182,11 @@ const EmployeeEdit = () => {
                   </option>
                 ))}
               </Form.Select>
+              {
+                !employeeEditState.empGender && btnClick === true ? (
+                  <span style={{color : 'red'}}>Please select gender</span>
+                ):(<></>)
+              }
             </Form.Group>
           </div>
           <div className="row">
