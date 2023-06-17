@@ -57,7 +57,7 @@ const EmployeeAdd = () => {
                 empGender: '',
               });
               setMessage('');
-              navigate('/employeelist');
+              // navigate('/employeelist');
             }, 1000);
           }
         })
@@ -74,6 +74,7 @@ const EmployeeAdd = () => {
     }
   };
 
+  console.log('employeeState.empGender-->',employeeState.empGender);
   return (
     <div className="container">
       <div className="row" style={{ width: '60%', margin: '0 auto' }}>
@@ -153,6 +154,7 @@ const EmployeeAdd = () => {
                 <option value="female">Female</option>
                 <option value="others">Others</option>
               </Form.Select>
+              {!employeeState.empGender && onBtnClick === true ? (<span style={{color:'red'}}>Select gender !</span>):(<></>)}
             </Form.Group>
           </div>
           <div className="row">
