@@ -12,7 +12,7 @@ const EmployeeAddTask = () => {
     emptaskphone: '',
     emptaskgender: '',
   });
-  const [validated, setValidated] = useState(false);
+  const [btnValidated, setBtnValidated] = useState(false);
   const [message, setMessage] = useState('');
   const [errStatus, setErrStatus] = useState(false);
 
@@ -25,8 +25,10 @@ const EmployeeAddTask = () => {
       !employeeAdd.emptaskgender
     ) {
       setErrStatus(true);
+      setBtnValidated(true);
       setMessage('Input data missing.');
       setTimeout(() => {
+        setBtnValidated(false);
         setMessage('');
       }, 2000);
     } else {
@@ -37,7 +39,7 @@ const EmployeeAddTask = () => {
         phone: employeeAdd.emptaskphone,
         gender: employeeAdd.emptaskgender,
       };
-
+      setBtnValidated(false);
       axios
         .post(`${process.env.REACT_APP_JSON_API}/employee`, inputData)
         .then((res) => {
@@ -63,7 +65,6 @@ const EmployeeAddTask = () => {
         });
     }
 
-    setValidated(true);
   };
 
   return (
@@ -75,7 +76,6 @@ const EmployeeAddTask = () => {
               <Form.Group as={Col} md="6">
                 <Form.Label>Username</Form.Label>
                 <Form.Control
-
                   type="text"
                   placeholder="Username"
                   value={employeeAdd.emptaskname}
@@ -86,6 +86,11 @@ const EmployeeAddTask = () => {
                     })
                   }
                 />
+                {
+                  !employeeAdd.emptaskname && btnValidated === true ? (
+                    <span style={{color: 'red'}}>Please add UserName</span>
+                  ):(<></>)
+                }
                 
               </Form.Group>
               <Form.Group as={Col} md="6">
@@ -106,6 +111,11 @@ const EmployeeAddTask = () => {
                   />
                 
                 </InputGroup>
+                {
+                  !employeeAdd.emptaskemail && btnValidated === true ? (
+                    <span style={{color: 'red'}}>Please add Email</span>
+                  ):(<></>)
+                }
               </Form.Group>
             </Row>
             <Row className="mb-6">
@@ -123,6 +133,11 @@ const EmployeeAddTask = () => {
                   }
 
                 />
+                {
+                  !employeeAdd.emptaskphone && btnValidated === true ? (
+                    <span style={{color: 'red'}}>Please add contact no.</span>
+                  ):(<></>)
+                }
               </Form.Group>
               <Form.Group as={Col} md="6">
                 <Form.Label>Gender</Form.Label>
@@ -140,6 +155,11 @@ const EmployeeAddTask = () => {
                   <option value="female">Female</option>
                   <option value="others">Others</option>
                 </Form.Select>
+                {
+                  !employeeAdd.emptaskgender && btnValidated === true ? (
+                    <span style={{color: 'red'}}>Please select gender</span>
+                  ):(<></>)
+                }
               </Form.Group>
             </Row>
 
