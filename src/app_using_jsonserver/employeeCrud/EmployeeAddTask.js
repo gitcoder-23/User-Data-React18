@@ -70,12 +70,12 @@ const EmployeeAddTask = () => {
     <>
       <div className="container my-4">
         <div className="row" style={{ width: '70%', margin: '0 auto' }}>
-          <Form noValidate validated={validated} onSubmit={empSubmit}>
+          <Form onSubmit={empSubmit}>
             <Row className="mb-3">
               <Form.Group as={Col} md="6">
                 <Form.Label>Username</Form.Label>
                 <Form.Control
-                  required
+
                   type="text"
                   placeholder="Username"
                   value={employeeAdd.emptaskname}
@@ -86,13 +86,11 @@ const EmployeeAddTask = () => {
                     })
                   }
                 />
-                <Form.Control.Feedback type="invalid">
-                  Please provide username.
-                </Form.Control.Feedback>
+                
               </Form.Group>
               <Form.Group as={Col} md="6">
                 <Form.Label>Email</Form.Label>
-                <InputGroup hasValidation>
+                <InputGroup>
                   <InputGroup.Text id="inputGroupPrepend">@</InputGroup.Text>
                   <Form.Control
                     type="text"
@@ -104,12 +102,9 @@ const EmployeeAddTask = () => {
                         emptaskemail: event.target.value,
                       })
                     }
-                    aria-describedby="inputGroupPrepend"
-                    required
+                    
                   />
-                  <Form.Control.Feedback type="invalid">
-                    Please provide Email.
-                  </Form.Control.Feedback>
+                
                 </InputGroup>
               </Form.Group>
             </Row>
@@ -126,11 +121,8 @@ const EmployeeAddTask = () => {
                       emptaskphone: event.target.value,
                     })
                   }
-                  required
+
                 />
-                <Form.Control.Feedback type="invalid">
-                  Please provide phone number.
-                </Form.Control.Feedback>
               </Form.Group>
               <Form.Group as={Col} md="6">
                 <Form.Label>Gender</Form.Label>
@@ -153,10 +145,7 @@ const EmployeeAddTask = () => {
 
             <Form.Group className="mb-3">
               <Form.Check
-                required
                 label="Agree to terms and conditions"
-                feedback="You must agree before submitting."
-                feedbackType="invalid"
               />
             </Form.Group>
             <Button variant="info" type="submit">

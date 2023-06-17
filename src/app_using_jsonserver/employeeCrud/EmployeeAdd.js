@@ -57,7 +57,7 @@ const EmployeeAdd = () => {
                 empGender: '',
               });
               setMessage('');
-              // navigate('/employeelist');
+              navigate('/employeelist');
             }, 1000);
           }
         })
