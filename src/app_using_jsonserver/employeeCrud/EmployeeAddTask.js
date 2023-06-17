@@ -15,6 +15,7 @@ const EmployeeAddTask = () => {
   const [btnValidated, setBtnValidated] = useState(false);
   const [message, setMessage] = useState('');
   const [errStatus, setErrStatus] = useState(false);
+  const [btnCheck, setBtnCheck] = useState(false);
 
   const empSubmit = (event) => {
     event.preventDefault();
@@ -26,9 +27,11 @@ const EmployeeAddTask = () => {
     ) {
       setErrStatus(true);
       setBtnValidated(true);
+      setBtnCheck(false);
       setMessage('Input data missing.');
       setTimeout(() => {
         setBtnValidated(false);
+        setBtnCheck(true);
         setMessage('');
       }, 2000);
     } else {
@@ -40,6 +43,7 @@ const EmployeeAddTask = () => {
         gender: employeeAdd.emptaskgender,
       };
       setBtnValidated(false);
+      setBtnCheck(false);
       axios
         .post(`${process.env.REACT_APP_JSON_API}/employee`, inputData)
         .then((res) => {
@@ -64,6 +68,7 @@ const EmployeeAddTask = () => {
           }
         });
     }
+    console.warn('btnCheck-->',btnCheck);
 
   };
 
@@ -166,7 +171,13 @@ const EmployeeAddTask = () => {
             <Form.Group className="mb-3">
               <Form.Check
                 label="Agree to terms and conditions"
+                onChange={(event) =>{setBtnCheck(event.target.checked)}}
               />
+              {
+                btnCheck === false && btnValidated === true ? 
+                ( <span style={{color : 'red'}}>You have to agreee before submitting</span> ):
+                (<></>)
+              }
             </Form.Group>
             <Button variant="info" type="submit">
               Submit form
