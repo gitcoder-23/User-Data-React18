@@ -74,7 +74,7 @@ const EmployeeAdd = () => {
     }
   };
 
-  console.log('employeeState.empGender-->',employeeState.empGender);
+  // console.log('employeeState.empGender-->',employeeState.empGender);
   return (
     <div className="container">
       <div className="row" style={{ width: '60%', margin: '0 auto' }}>
@@ -119,6 +119,11 @@ const EmployeeAdd = () => {
                   }
                 />
               </InputGroup>
+              {employeeState.empEmail === '' && onBtnClick === true ? (
+                <span style={{ color: 'red' }}>Enter employee Email</span>
+              ) : (
+                <></>
+              )}
             </Form.Group>
             <Form.Group md="4" style={{ marginBottom: '20px' }}>
               <Form.Label>Phone</Form.Label>
@@ -135,6 +140,11 @@ const EmployeeAdd = () => {
                   })
                 }
               />
+               {employeeState.empPhone === '' && onBtnClick === true ? (
+                <span style={{ color: 'red' }}>Enter employee contact no.</span>
+              ) : (
+                <></>
+              )}
             </Form.Group>
 
             <Form.Group md="4" style={{ marginBottom: '20px' }}>
