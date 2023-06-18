@@ -12,7 +12,7 @@ const EmployeeAddTask = () => {
     emptaskphone: '',
     emptaskgender: '',
   });
-  const [btnValidated, setBtnValidated] = useState(false);
+  const [btnClickValidated, setBtnClickValidated] = useState(false);
   const [message, setMessage] = useState('');
   const [errStatus, setErrStatus] = useState(false);
   const [btnCheck, setBtnCheck] = useState(false);
@@ -23,15 +23,16 @@ const EmployeeAddTask = () => {
       !employeeAdd.emptaskname ||
       !employeeAdd.emptaskemail ||
       !employeeAdd.emptaskphone ||
-      !employeeAdd.emptaskgender
+      !employeeAdd.emptaskgender ||
+      btnCheck === false
     ) {
       setErrStatus(true);
-      setBtnValidated(true);
+      setBtnClickValidated(true);
       setBtnCheck(false);
       setMessage('Input data missing.');
       setTimeout(() => {
-        setBtnValidated(false);
-        setBtnCheck(true);
+        setBtnClickValidated(false);
+        setBtnCheck(false);
         setMessage('');
       }, 2000);
     } else {
@@ -42,8 +43,8 @@ const EmployeeAddTask = () => {
         phone: employeeAdd.emptaskphone,
         gender: employeeAdd.emptaskgender,
       };
-      setBtnValidated(false);
-      setBtnCheck(false);
+      setBtnClickValidated(false);
+      setBtnCheck(true);
       axios
         .post(`${process.env.REACT_APP_JSON_API}/employee`, inputData)
         .then((res) => {
@@ -92,7 +93,7 @@ const EmployeeAddTask = () => {
                   }
                 />
                 {
-                  !employeeAdd.emptaskname && btnValidated === true ? (
+                  !employeeAdd.emptaskname && btnCheck === false && btnClickValidated === true ? (
                     <span style={{color: 'red'}}>Please add UserName</span>
                   ):(<></>)
                 }
@@ -117,7 +118,7 @@ const EmployeeAddTask = () => {
                 
                 </InputGroup>
                 {
-                  !employeeAdd.emptaskemail && btnValidated === true ? (
+                  !employeeAdd.emptaskemail && btnCheck === false && btnClickValidated === true ? (
                     <span style={{color: 'red'}}>Please add Email</span>
                   ):(<></>)
                 }
@@ -139,7 +140,7 @@ const EmployeeAddTask = () => {
 
                 />
                 {
-                  !employeeAdd.emptaskphone && btnValidated === true ? (
+                  !employeeAdd.emptaskphone && btnCheck === false && btnClickValidated === true ? (
                     <span style={{color: 'red'}}>Please add contact no.</span>
                   ):(<></>)
                 }
@@ -161,7 +162,7 @@ const EmployeeAddTask = () => {
                   <option value="others">Others</option>
                 </Form.Select>
                 {
-                  !employeeAdd.emptaskgender && btnValidated === true ? (
+                  !employeeAdd.emptaskgender && btnCheck === false && btnClickValidated === true ? (
                     <span style={{color: 'red'}}>Please select gender</span>
                   ):(<></>)
                 }
@@ -174,7 +175,8 @@ const EmployeeAddTask = () => {
                 onChange={(event) =>{setBtnCheck(event.target.checked)}}
               />
               {
-                btnCheck === false && btnValidated === true ? 
+                btnCheck === false && 
+                btnClickValidated === true ? 
                 ( <span style={{color : 'red'}}>You have to agreee before submitting</span> ):
                 (<></>)
               }
