@@ -19,6 +19,7 @@ const EmployeeEdit = () => {
   const [showMessage, setShowMessage] = useState('');
   const [showError, setShowError] = useState(false);
   const [btnClick, setBtnClick] = useState(false);
+  const [onCheck, setOnCheck] = useState(false);
 
   useEffect(() => {}, [state?.singleUser, empeid]);
 
@@ -46,10 +47,12 @@ const EmployeeEdit = () => {
       !employeeEditState.empName ||
       !employeeEditState.empEmail ||
       !employeeEditState.empPhone ||
-      !employeeEditState.empGender
+      !employeeEditState.empGender ||
+      onCheck === false
     ) {
       setShowError(true);
       setBtnClick(true);
+      setOnCheck(false)
       setShowMessage('Please fill all the fields');
       setTimeout(() => {
         setShowMessage('');
@@ -63,6 +66,7 @@ const EmployeeEdit = () => {
         gender: employeeEditState.empGender,
       };
       setBtnClick(false);
+      setOnCheck(true);
       axios
         .put(`${process.env.REACT_APP_JSON_API}/employee/${empeid}`, formData)
         .then((eData) => {
@@ -189,6 +193,15 @@ const EmployeeEdit = () => {
               }
             </Form.Group>
           </div>
+          <div className="container mb-3">
+            <Form.Check label="Agree to continue edit"
+            onChange={(ev)=>setOnCheck(ev.target.checked)}
+            />
+            {
+              onCheck === false && btnClick === true ? 
+              (<span style={{color:'red'}}>Data is not checked</span> ):(<></>)
+            }
+            </div>
           <div className="row">
             <div className="col-md-4">
               <Button variant="primary" type="submit">
