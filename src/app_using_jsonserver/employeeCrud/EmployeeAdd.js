@@ -11,6 +11,7 @@ const EmployeeAdd = () => {
     empPhone: '',
     empGender: '',
     activeEmp: false,
+    empPerformance: 'good',
   });
 
   const [message, setMessage] = useState('');
@@ -25,6 +26,7 @@ const EmployeeAdd = () => {
       !employeeState.empEmail ||
       !employeeState.empPhone ||
       !employeeState.empGender
+      // !employeeState.empPerformance
     ) {
       setError(true);
       setOnBtnClick(true);
@@ -41,6 +43,7 @@ const EmployeeAdd = () => {
         phone: employeeState.empPhone,
         gender: employeeState.empGender,
         status: employeeState.activeEmp,
+        performance: employeeState.empPerformance,
       };
       setOnBtnClick(false);
 
@@ -77,7 +80,7 @@ const EmployeeAdd = () => {
     }
   };
 
-  console.log('employeeState.activeEmp-->', employeeState.activeEmp);
+  console.log('employeeState.empPerformance-->', employeeState.empPerformance);
   return (
     <div className="container">
       <div className="row" style={{ width: '60%', margin: '0 auto' }}>
@@ -190,6 +193,56 @@ const EmployeeAdd = () => {
                   Employee
                 </p>
               </InputGroup>
+            </Form.Group>
+
+            <Form.Group md="4" style={{ marginBottom: '20px' }}>
+              <Form.Label>Employee Performance</Form.Label>
+              <InputGroup className="mb-3">
+                <span style={{ margin: '10px' }}>Good</span>{' '}
+                <InputGroup.Radio
+                  value="good"
+                  checked={
+                    employeeState.empPerformance === 'good' ? true : false
+                  }
+                  onChange={(e) =>
+                    setEmployeeState({
+                      ...employeeState,
+                      empPerformance: e.target.value,
+                    })
+                  }
+                />
+                <span style={{ margin: '10px' }}>Better</span>{' '}
+                <InputGroup.Radio
+                  value="better"
+                  checked={
+                    employeeState.empPerformance === 'better' ? true : false
+                  }
+                  onChange={(e) =>
+                    setEmployeeState({
+                      ...employeeState,
+                      empPerformance: e.target.value,
+                    })
+                  }
+                />
+                <span style={{ margin: '10px' }}>Best</span>{' '}
+                <InputGroup.Radio
+                  value="best"
+                  checked={
+                    employeeState.empPerformance === 'best' ? true : false
+                  }
+                  onChange={(e) =>
+                    setEmployeeState({
+                      ...employeeState,
+                      empPerformance: e.target.value,
+                    })
+                  }
+                />
+              </InputGroup>
+              {/* {employeeState.empPerformance === '' && onBtnClick === true ? (
+                <span style={{ color: 'red' }}>Choose any one !</span>
+              ) : (
+                <></>
+              )} */}
             </Form.Group>
           </div>
           <div className="row">

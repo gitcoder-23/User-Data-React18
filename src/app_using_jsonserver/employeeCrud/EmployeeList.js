@@ -152,6 +152,7 @@ const EmployeeList = () => {
                   <th>Phone</th>
                   <th>Gender</th>
                   <th>Employee Status</th>
+                  <th>Employee Performance</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -197,6 +198,7 @@ const EmployeeList = () => {
                               <span style={{ color: 'green' }}>Active</span>
                             )}
                           </th>
+                          <th>{eData.performance}</th>
                           <td>
                             <Button
                               variant="warning"

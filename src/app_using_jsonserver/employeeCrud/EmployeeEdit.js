@@ -16,6 +16,7 @@ const EmployeeEdit = () => {
     empPhone: state?.singleUser.phone || '',
     empGender: state?.singleUser.gender || '',
     empActive: state?.singleUser.status || false,
+    empPerformance: state?.singleUser.performance || 'good',
   });
   const [showMessage, setShowMessage] = useState('');
   const [showError, setShowError] = useState(false);
@@ -66,6 +67,7 @@ const EmployeeEdit = () => {
         phone: employeeEditState.empPhone,
         gender: employeeEditState.empGender,
         status: employeeEditState.empActive,
+        performance: employeeEditState.empPerformance,
       };
       setBtnClick(false);
       setOnCheck(true);
@@ -222,6 +224,56 @@ const EmployeeEdit = () => {
               <></>
             )}
           </div>
+
+          <Form.Group md="4" style={{ marginBottom: '20px' }}>
+            <Form.Label>Employee Performance</Form.Label>
+            <InputGroup className="mb-3">
+              <span style={{ margin: '10px' }}>Good</span>{' '}
+              <InputGroup.Radio
+                value="good"
+                checked={
+                  employeeEditState.empPerformance === 'good' ? true : false
+                }
+                onChange={(e) =>
+                  setEmployeeEditState({
+                    ...employeeEditState,
+                    empPerformance: e.target.value,
+                  })
+                }
+              />
+              <span style={{ margin: '10px' }}>Better</span>{' '}
+              <InputGroup.Radio
+                value="better"
+                checked={
+                  employeeEditState.empPerformance === 'better' ? true : false
+                }
+                onChange={(e) =>
+                  setEmployeeEditState({
+                    ...employeeEditState,
+                    empPerformance: e.target.value,
+                  })
+                }
+              />
+              <span style={{ margin: '10px' }}>Best</span>{' '}
+              <InputGroup.Radio
+                value="best"
+                checked={
+                  employeeEditState.empPerformance === 'best' ? true : false
+                }
+                onChange={(e) =>
+                  setEmployeeEditState({
+                    ...employeeEditState,
+                    empPerformance: e.target.value,
+                  })
+                }
+              />
+            </InputGroup>
+            {/* {employeeEditState.empPerformance === '' && onBtnClick === true ? (
+                <span style={{ color: 'red' }}>Choose any one !</span>
+              ) : (
+                <></>
+              )} */}
+          </Form.Group>
           <div className="row">
             <div className="col-md-4">
               <Button variant="primary" type="submit">
