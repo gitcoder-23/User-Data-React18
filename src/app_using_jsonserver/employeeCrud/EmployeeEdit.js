@@ -15,6 +15,7 @@ const EmployeeEdit = () => {
     empEmail: state?.singleUser.email || '',
     empPhone: state?.singleUser.phone || '',
     empGender: state?.singleUser.gender || '',
+    empActive: state?.singleUser.status || false,
   });
   const [showMessage, setShowMessage] = useState('');
   const [showError, setShowError] = useState(false);
@@ -52,7 +53,7 @@ const EmployeeEdit = () => {
     ) {
       setShowError(true);
       setBtnClick(true);
-      setOnCheck(false)
+      setOnCheck(false);
       setShowMessage('Please fill all the fields');
       setTimeout(() => {
         setShowMessage('');
@@ -64,6 +65,7 @@ const EmployeeEdit = () => {
         email: employeeEditState.empEmail,
         phone: employeeEditState.empPhone,
         gender: employeeEditState.empGender,
+        status: employeeEditState.empActive,
       };
       setBtnClick(false);
       setOnCheck(true);
@@ -113,11 +115,11 @@ const EmployeeEdit = () => {
                   })
                 }
               />
-              {
-                !employeeEditState.empName && btnClick === true ? (
-                  <span style={{color : 'red'}}>Name field is empty !</span>
-                ):(<></>)
-              }
+              {!employeeEditState.empName && btnClick === true ? (
+                <span style={{ color: 'red' }}>Name field is empty !</span>
+              ) : (
+                <></>
+              )}
             </Form.Group>
             <Form.Group md="4" style={{ marginBottom: '20px' }}>
               <Form.Label>Email</Form.Label>
@@ -137,11 +139,11 @@ const EmployeeEdit = () => {
                   }
                 />
               </InputGroup>
-              {
-                !employeeEditState.empEmail && btnClick === true ? (
-                  <span style={{color : 'red'}}>Email field is empty !</span>
-                ):(<></>)
-              }
+              {!employeeEditState.empEmail && btnClick === true ? (
+                <span style={{ color: 'red' }}>Email field is empty !</span>
+              ) : (
+                <></>
+              )}
             </Form.Group>
             <Form.Group md="4" style={{ marginBottom: '20px' }}>
               <Form.Label>Phone</Form.Label>
@@ -158,11 +160,11 @@ const EmployeeEdit = () => {
                   })
                 }
               />
-              {
-                !employeeEditState.empPhone && btnClick === true ? (
-                  <span style={{color : 'red'}}>Contact field is empty !</span>
-                ):(<></>)
-              }
+              {!employeeEditState.empPhone && btnClick === true ? (
+                <span style={{ color: 'red' }}>Contact field is empty !</span>
+              ) : (
+                <></>
+              )}
             </Form.Group>
 
             <Form.Group md="4" style={{ marginBottom: '20px' }}>
@@ -186,22 +188,40 @@ const EmployeeEdit = () => {
                   </option>
                 ))}
               </Form.Select>
-              {
-                !employeeEditState.empGender && btnClick === true ? (
-                  <span style={{color : 'red'}}>Please select gender</span>
-                ):(<></>)
-              }
+              {!employeeEditState.empGender && btnClick === true ? (
+                <span style={{ color: 'red' }}>Please select gender</span>
+              ) : (
+                <></>
+              )}
             </Form.Group>
           </div>
+
+          <Form.Group md="4" style={{ marginBottom: '20px' }}>
+            <InputGroup className="mb-3">
+              <InputGroup.Checkbox
+                checked={employeeEditState.empActive}
+                onChange={(e) =>
+                  setEmployeeEditState({
+                    ...employeeEditState,
+                    empActive: e.target.checked,
+                  })
+                }
+              />{' '}
+              <p style={{ margin: '10px' }}>Active Employee</p>
+            </InputGroup>
+          </Form.Group>
+
           <div className="container mb-3">
-            <Form.Check label="Agree to continue edit"
-            onChange={(ev)=>setOnCheck(ev.target.checked)}
+            <Form.Check
+              label="Agree to continue edit"
+              onChange={(ev) => setOnCheck(ev.target.checked)}
             />
-            {
-              onCheck === false && btnClick === true ? 
-              (<span style={{color:'red'}}>Data is not checked</span> ):(<></>)
-            }
-            </div>
+            {onCheck === false && btnClick === true ? (
+              <span style={{ color: 'red' }}>Data is not checked</span>
+            ) : (
+              <></>
+            )}
+          </div>
           <div className="row">
             <div className="col-md-4">
               <Button variant="primary" type="submit">

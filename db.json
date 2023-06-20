@@ -23,6 +23,14 @@
       "phone": "9894561258",
       "gender": "female",
       "status": true
+    },
+    {
+      "employeename": "Raja",
+      "email": "raja@yahoo.com",
+      "phone": "432234423423",
+      "gender": "male",
+      "status": false,
+      "id": 1687269796761
     }
   ]
 }
