@@ -151,6 +151,7 @@ const EmployeeList = () => {
                   <th>Email</th>
                   <th>Phone</th>
                   <th>Gender</th>
+                  <th>Employee Status</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -189,6 +190,13 @@ const EmployeeList = () => {
                           <th>{eData.email}</th>
                           <th>{eData.phone}</th>
                           <th>{eData.gender}</th>
+                          <th>
+                            {eData.status === false ? (
+                              <span style={{ color: 'red' }}>Inactive</span>
+                            ) : (
+                              <span style={{ color: 'green' }}>Active</span>
+                            )}
+                          </th>
                           <td>
                             <Button
                               variant="warning"

@@ -10,6 +10,7 @@ const EmployeeAdd = () => {
     empEmail: '',
     empPhone: '',
     empGender: '',
+    activeEmp: false,
   });
 
   const [message, setMessage] = useState('');
@@ -39,6 +40,7 @@ const EmployeeAdd = () => {
         email: employeeState.empEmail,
         phone: employeeState.empPhone,
         gender: employeeState.empGender,
+        status: employeeState.activeEmp,
       };
       setOnBtnClick(false);
 
@@ -55,6 +57,7 @@ const EmployeeAdd = () => {
                 empEmail: '',
                 empPhone: '',
                 empGender: '',
+                activeEmp: false,
               });
               setMessage('');
               navigate('/employeelist');
@@ -74,7 +77,7 @@ const EmployeeAdd = () => {
     }
   };
 
-  // console.log('employeeState.empGender-->',employeeState.empGender);
+  console.log('employeeState.activeEmp-->', employeeState.activeEmp);
   return (
     <div className="container">
       <div className="row" style={{ width: '60%', margin: '0 auto' }}>
@@ -140,7 +143,7 @@ const EmployeeAdd = () => {
                   })
                 }
               />
-               {employeeState.empPhone === '' && onBtnClick === true ? (
+              {employeeState.empPhone === '' && onBtnClick === true ? (
                 <span style={{ color: 'red' }}>Enter employee contact no.</span>
               ) : (
                 <></>
@@ -164,7 +167,26 @@ const EmployeeAdd = () => {
                 <option value="female">Female</option>
                 <option value="others">Others</option>
               </Form.Select>
-              {!employeeState.empGender && onBtnClick === true ? (<span style={{color:'red'}}>Select gender !</span>):(<></>)}
+              {!employeeState.empGender && onBtnClick === true ? (
+                <span style={{ color: 'red' }}>Select gender !</span>
+              ) : (
+                <></>
+              )}
+            </Form.Group>
+
+            <Form.Group md="4" style={{ marginBottom: '20px' }}>
+              <InputGroup className="mb-3">
+                <InputGroup.Checkbox
+                  checked={employeeState.activeEmp}
+                  onChange={(e) =>
+                    setEmployeeState({
+                      ...employeeState,
+                      activeEmp: e.target.checked,
+                    })
+                  }
+                />{' '}
+                <p style={{ margin: '10px' }}>Active Employee</p>
+              </InputGroup>
             </Form.Group>
           </div>
           <div className="row">
