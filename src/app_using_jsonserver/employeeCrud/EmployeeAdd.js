@@ -12,6 +12,7 @@ const EmployeeAdd = () => {
     empGender: '',
     activeEmp: false,
     empPerformance: 'good',
+    empDetails: '',
   });
 
   const [message, setMessage] = useState('');
@@ -25,7 +26,8 @@ const EmployeeAdd = () => {
       !employeeState.empName ||
       !employeeState.empEmail ||
       !employeeState.empPhone ||
-      !employeeState.empGender
+      !employeeState.empGender ||
+      !employeeState.empDetails
       // !employeeState.empPerformance
     ) {
       setError(true);
@@ -44,6 +46,7 @@ const EmployeeAdd = () => {
         gender: employeeState.empGender,
         status: employeeState.activeEmp,
         performance: employeeState.empPerformance,
+        empdetails: employeeState.empDetails,
       };
       setOnBtnClick(false);
 
@@ -61,6 +64,8 @@ const EmployeeAdd = () => {
                 empPhone: '',
                 empGender: '',
                 activeEmp: false,
+                empdetails: '',
+                empPerformance: 'good',
               });
               setMessage('');
               navigate('/employeelist');
@@ -243,6 +248,27 @@ const EmployeeAdd = () => {
               ) : (
                 <></>
               )} */}
+            </Form.Group>
+
+            <Form.Group md="4" style={{ marginBottom: '20px' }}>
+              <Form.Label>Employee Details</Form.Label>
+              <Form.Control
+                as="textarea"
+                placeholder="Leave a comment here"
+                style={{ height: '100px' }}
+                value={employeeState.empDetails}
+                onChange={(e) =>
+                  setEmployeeState({
+                    ...employeeState,
+                    empDetails: e.target.value,
+                  })
+                }
+              />
+              {employeeState.empDetails === '' && onBtnClick === true ? (
+                <span style={{ color: 'red' }}>Enter details!</span>
+              ) : (
+                <></>
+              )}
             </Form.Group>
           </div>
           <div className="row">

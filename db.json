@@ -7,16 +7,18 @@
       "gender": "female",
       "status": false,
       "performance": "best",
+      "empdetails": "New Employee",
       "id": 1686750306112
     },
     {
-      "id": 1687271789074,
-      "employeename": "Krishna",
+      "id": 1687272681675,
+      "employeename": "Khan Baba",
       "email": "kj@yahoo.com",
       "phone": "9894561258",
-      "gender": "male",
+      "gender": "female",
       "status": true,
-      "performance": "best"
+      "performance": "better",
+      "empdetails": "Hi test"
     }
   ]
 }
