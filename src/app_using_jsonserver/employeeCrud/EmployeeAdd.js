@@ -185,21 +185,33 @@ const EmployeeAdd = () => {
                     })
                   }
                 />{' '}
-                <p style={{ margin: '10px' }}>Active Employee</p>
+                <p style={{ margin: '10px' }}>
+                  {employeeState.activeEmp === false ? 'Inactive' : 'Active'}{' '}
+                  Employee
+                </p>
               </InputGroup>
             </Form.Group>
           </div>
           <div className="row">
-            <div className="col-md-4">
+            <div className="col-md-2">
               <Button variant="primary" type="submit">
                 Submit
+              </Button>{' '}
+            </div>
+            <div className="col-md-2">
+              <Button
+                variant="secondary"
+                type="button"
+                onClick={() => navigate('/employeelist')}
+              >
+                Back
               </Button>{' '}
             </div>
             <div className="col-md-8">
               {message ? (
                 <h2
                   className={error === true ? 'text-danger' : 'text-success'}
-                  style={{ fontSize: '20px' }}
+                  style={{ fontSize: '20px', margin: '5px' }}
                 >
                   {message}
                 </h2>

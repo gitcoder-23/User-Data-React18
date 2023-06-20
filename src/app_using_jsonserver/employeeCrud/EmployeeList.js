@@ -9,7 +9,7 @@ import EmployeeSearch from './EmployeeSearch';
 // Search
 
 const EmployeeList = () => {
-  const [employeeDatas, setEmployeeDatas] = useState(undefined || []);
+  const [employeeDatas, setEmployeeDatas] = useState(undefined);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
   // view modal useState
