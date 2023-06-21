@@ -275,9 +275,14 @@ const EmployeeEdit = () => {
               )} */}
           </Form.Group>
           <div className="row">
-            <div className="col-md-4">
+            <div className="col-md-2">
               <Button variant="primary" type="submit">
                 Submit
+              </Button>{' '}
+            </div>
+            <div className="col-md-2">
+              <Button variant="success" type="button" onClick={()=>navigate('/employeelist')}>
+                Back
               </Button>{' '}
             </div>
             <div className="col-md-8">

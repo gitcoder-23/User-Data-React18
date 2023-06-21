@@ -98,6 +98,14 @@ const EmployeeList = () => {
     });
   };
 
+  const editUserData =(userdata) =>{
+    console.log('userdata-->',userdata);
+
+    navigate(`/employee/useredit/${userdata.id}`, {
+      // state: { singleUser: userdata },
+    });
+  };
+
   return (
     <div className="container">
       {/* View Button start*/}
@@ -228,6 +236,12 @@ const EmployeeList = () => {
                               onClick={() => editData(eData)}
                             >
                               Edit
+                            </Button>{' '}
+                            <Button
+                              variant="outline-secondary"
+                              onClick={() => editUserData(eData)}
+                            >
+                              User edit 
                             </Button>{' '}
                             <Button
                               variant="danger"
