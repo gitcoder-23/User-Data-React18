@@ -31,6 +31,7 @@ const EmployeeEditTask = () => {
                 <Form.Control />
               </Form.Group>
               <Form.Group as={Col}>
+                <Form.Label>Gender</Form.Label>
                 <Form.Select aria-label="Default select example">
                   <option>Open this select menu</option>
                   <option value="1">One</option>

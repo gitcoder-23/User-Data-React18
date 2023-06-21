@@ -114,7 +114,7 @@
   "workbench.editor.untitled.hint": "hidden",
   "redhat.telemetry.enabled": true,
   "errorLens.excludeBySource": ["Java(0)"],
-  "window.zoomLevel": 0,
+  "window.zoomLevel": 1,
   "editor.indentSize": "tabSize"
   // "php.validate.executablePath": ""
   // "editor.foldingMaximumRegions": 6000
