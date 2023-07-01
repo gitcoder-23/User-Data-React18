@@ -9,7 +9,7 @@ const EmployeeEdit = () => {
   const { empeid } = useParams();
   const animatedComponents = makeAnimated();
   const navigate = useNavigate();
-  // console.log('empeid->', empeid);
+  // console.log('empeid->', empeid);//
 
   const { state } = useLocation();
 
