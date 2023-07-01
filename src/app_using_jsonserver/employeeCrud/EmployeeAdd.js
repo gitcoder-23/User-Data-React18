@@ -85,7 +85,7 @@ const EmployeeAdd = () => {
                 techSkill: '',
               });
               setMessage('');
-              // navigate('/employeelist');
+              navigate('/employeelist');
             }, 1000);
           }
         })

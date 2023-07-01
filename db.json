@@ -31,14 +31,12 @@
       "empdetails": "Hi "
     },
     {
-      "id": 1688219749460,
       "employeename": "Khan Baba",
       "email": "raja@yahoo.com",
       "phone": "7894561258",
       "gender": "female",
       "status": true,
       "performance": "better",
-      "empdetails": "Test Details",
       "technology": [
         {
           "value": "nodejs",
@@ -51,18 +49,21 @@
         {
           "value": "angular",
           "label": "Angular"
+        },
+        {
+          "value": "next",
+          "label": "Next"
         }
-      ]
+      ],
+      "id": 1688219749460
     },
     {
-      "id": 1688219869852,
       "employeename": "Krishna Jain",
       "email": "kj@yahoo.com",
       "phone": "432234423423",
       "gender": "others",
       "status": false,
       "performance": "best",
-      "empdetails": "Jain Status",
       "technology": [
         {
           "value": "reactjs",
@@ -75,24 +76,9 @@
         {
           "value": "javascript",
           "label": "Javascript"
-        },
-        {
-          "value": "angular",
-          "label": "Angular"
-        },
-        {
-          "value": "next",
-          "label": "Next"
-        },
-        {
-          "value": "java",
-          "label": "Java"
-        },
-        {
-          "value": "python",
-          "label": "Python"
         }
-      ]
+      ],
+      "id": 1688219869852
     }
   ]
 }
