@@ -6,12 +6,18 @@ import ViewTaskModal from './taskModal/ViewTaskModal';
 import AddTaskModal from './taskModal/AddTaskModal';
 import EditTaskModal from './taskModal/EditTaskModal';
 import Spinner from 'react-bootstrap/Spinner';
+import Pagination from '../../components/Pagination';
 
 const UserAppTask = () => {
   const [userlist, setUserlist] = useState([]);
   const [showUserData, setShowUserData] = useState({});
   const [dadaLoading, setDataLoading] = useState(false);
   const [viewModal, setViewModal] = useState(false);
+  const [showPerPage, setShowPerPage] = useState(6);
+  const [paginate, setPaginate] = useState({
+    startPage: 0,
+    endPage: showPerPage,
+  });
   //Add modal //
   const [addModal, setAddModal] = useState(false);
   const [userFirstName, setUserFirstName] = useState('');
@@ -39,7 +45,7 @@ const UserAppTask = () => {
     axios
       .get('https://dummyjson.com/users')
       .then((response) => {
-        // console.log('response-->',response.data.users);
+        console.log('response-->', response.data.users);
         setDataLoading(true);
         if (response.status === 200) {
           setUserlist(response.data.users);
@@ -153,6 +159,11 @@ const UserAppTask = () => {
     }
   };
 
+  const onPagNav = (start, end) => {
+    // console.log(start,end);
+    setPaginate({ startPage: start, endPage: end });
+  };
+
   // console.log('userlist-->',userlist);
 
   return (
@@ -208,9 +219,9 @@ const UserAppTask = () => {
       ) : (
         <>
           <div className="container mb-3">
-          <Button variant="outline-primary" onClick={() => setAddModal(true)}>
-            Add User
-          </Button>{' '}
+            <Button variant="outline-primary" onClick={() => setAddModal(true)}>
+              Add User
+            </Button>{' '}
           </div>
           <Table striped="columns">
             <thead>
@@ -225,43 +236,50 @@ const UserAppTask = () => {
               </tr>
             </thead>
             {userlist &&
-              userlist.map((datalist, dataindex) => {
-                return (
-                  <tbody>
-                    <tr>
-                      <td>{dataindex + 1}</td>
-                      <td>
-                        {datalist.firstName} {datalist.lastName}
-                      </td>
-                      <td>{datalist.maidenName}</td>
-                      <th>{datalist.age}</th>
-                      <th>{datalist.email}</th>
-                      <th>{datalist.phone}</th>
-                      <td>
-                        <Button
-                          variant="outline-success"
-                          onClick={() => viewData(datalist)}
-                        >
-                          View
-                        </Button>{' '}
-                        <Button
-                          variant="outline-secondary"
-                          onClick={() => editData(datalist)}
-                        >
-                          Edit
-                        </Button>{' '}
-                        <Button
-                          variant="outline-danger"
-                          onClick={() => deleteData(dataindex)}
-                        >
-                          Delete
-                        </Button>
-                      </td>
-                    </tr>
-                  </tbody>
-                );
-              })}
+              userlist
+                .slice(paginate.startPage, paginate.endPage)
+                .map((datalist, dataindex) => {
+                  return (
+                    <tbody key={dataindex}>
+                      <tr>
+                        <td>{datalist.id}</td>
+                        <td>
+                          {datalist.firstName} {datalist.lastName}
+                        </td>
+                        <td>{datalist.maidenName}</td>
+                        <th>{datalist.age}</th>
+                        <th>{datalist.email}</th>
+                        <th>{datalist.phone}</th>
+                        <td>
+                          <Button
+                            variant="outline-success"
+                            onClick={() => viewData(datalist)}
+                          >
+                            View
+                          </Button>{' '}
+                          <Button
+                            variant="outline-secondary"
+                            onClick={() => editData(datalist)}
+                          >
+                            Edit
+                          </Button>{' '}
+                          <Button
+                            variant="outline-danger"
+                            onClick={() => deleteData(dataindex)}
+                          >
+                            Delete
+                          </Button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  );
+                })}
           </Table>
+          <Pagination
+            showPerPage={showPerPage}
+            onPagNav={onPagNav}
+            total={userlist.length}
+          />
         </>
       )}
     </div>
