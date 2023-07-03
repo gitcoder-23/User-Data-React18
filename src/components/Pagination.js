@@ -6,13 +6,19 @@ const Pagination = ({ showPerPage, onPagNav, total }) => {
   const [noOfbuttons, setNoOfButtons] = useState(
     Math.ceil(total / showPerPage)
   );
+  // const [lastPage, setLastPage] = useState();
 
   useEffect(() => {
     const value = showPerPage * counter;
     onPagNav(value - showPerPage, value);
+    // let lastElement = new Array(noOfbuttons)[new Array(noOfbuttons).length - 1];
+    // console.log('value - showPerPage-->', value - showPerPage);
   }, [counter]);
 
   //   console.log('total/showPerPage-->',total/showPerPage);
+  console.log('counter-->', counter);
+
+  console.log('noOfbuttons-->', typeof noOfbuttons);
 
   const onbtnClick = (type) => {
     if (type === 'prev') {
@@ -33,18 +39,25 @@ const Pagination = ({ showPerPage, onPagNav, total }) => {
   return (
     <>
       <div className="d-flex justify-content-center">
-        <Button variant="outline-success" onClick={() => onbtnClick('prev')}>
-          Previous
-        </Button>
-        {new Array(noOfbuttons).fill('').map((b, i) => (
-          <Button
-            variant={`outline-success ${i + 1 === counter ? 'active' : null}`}
-            key={i}
-          >
-            {i + 1}
+        {counter <= 1 ? (
+          <></>
+        ) : (
+          <Button variant="outline-success" onClick={() => onbtnClick('prev')}>
+            Previous
           </Button>
-        ))}
+        )}
 
+        {new Array(noOfbuttons).fill('').map((b, i) => {
+          return (
+            <Button
+              variant={`outline-success ${i + 1 === counter ? 'active' : null}`}
+              key={i}
+              onClick={() => setCounter(i + 1)}
+            >
+              {i + 1}
+            </Button>
+          );
+        })}
         <Button variant="outline-success" onClick={() => onbtnClick('next')}>
           Next
         </Button>
