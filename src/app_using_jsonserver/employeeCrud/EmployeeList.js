@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect } from 'react';
 import { useState } from 'react';
-import { Button, Table } from 'react-bootstrap';
+import { Button, ButtonGroup, Dropdown, Table } from 'react-bootstrap';
 import EmployeeView from './EmployeeView';
 import { Link, useNavigate } from 'react-router-dom';
 import SpinnerComponent from '../../components/SpinnerComponent';
@@ -98,8 +98,8 @@ const EmployeeList = () => {
     });
   };
 
-  const editUserData =(userdata) =>{
-    console.log('userdata-->',userdata);
+  const editUserData = (userdata) => {
+    console.log('userdata-->', userdata);
 
     navigate(`/employee/useredit/${userdata.id}`, {
       // state: { singleUser: userdata },
@@ -196,29 +196,58 @@ const EmployeeList = () => {
                         <tr>
                           <td>{index + 1}</td>
                           <td>{eData.employeename}</td>
-                          <th>{eData.email}</th>
-                          <th>{eData.phone}</th>
-                          <th>{eData.gender}</th>
-                          <th>
+                          <td>{eData.email}</td>
+                          <td>{eData.phone}</td>
+                          <td>{eData.gender}</td>
+                          <td>
                             {eData.status === false ? (
                               <span style={{ color: 'red' }}>Inactive</span>
                             ) : (
                               <span style={{ color: 'green' }}>Active</span>
                             )}
-                          </th>
-                          <th>{eData.performance}</th>
+                          </td>
+                          <td>{eData.performance}</td>
                           <td>
-                            <Button
+                            <Dropdown as={ButtonGroup}>
+                              <Button variant="info">Options</Button>
+
+                              <Dropdown.Toggle split variant="outline-info" />
+
+                              <Dropdown.Menu>
+                                <Dropdown.Item
+                                  onClick={() => viewEmpDetail(eData)}
+                                >
+                                  View Employee
+                                </Dropdown.Item>
+                                <Dropdown.Item
+                                  onClick={() => viewDetailPage(eData)}
+                                >
+                                  View Page
+                                </Dropdown.Item>
+                                <Dropdown.Item onClick={() => viewData(eData)}>
+                                  View Modal
+                                </Dropdown.Item>
+                                <Dropdown.Item onClick={() => editData(eData)}>
+                                  Edit
+                                </Dropdown.Item>
+                                <Dropdown.Item
+                                  onClick={() => editUserData(eData)}
+                                >
+                                  User Edit
+                                </Dropdown.Item>
+                                <Dropdown.Item
+                                  onClick={() => delData(eData.id)}
+                                >
+                                  Delete
+                                </Dropdown.Item>
+                              </Dropdown.Menu>
+                            </Dropdown>
+                            {/* <Button
                               variant="warning"
                               onClick={() => viewEmpDetail(eData)}
                             >
                               View Employee
                             </Button>{' '}
-                            {/* <ButtonComp
-                          variant="warning"
-                          buttonName="View Employee"
-                          onClickButton={viewEmpDetail(eData)}
-                        />{' '} */}
                             <Button
                               variant="info"
                               onClick={() => viewDetailPage(eData)}
@@ -241,14 +270,14 @@ const EmployeeList = () => {
                               variant="outline-secondary"
                               onClick={() => editUserData(eData)}
                             >
-                              User edit 
+                              User edit
                             </Button>{' '}
                             <Button
                               variant="danger"
                               onClick={() => delData(eData.id)}
                             >
                               Delete
-                            </Button>
+                            </Button> */}
                           </td>
                         </tr>
                       </tbody>
