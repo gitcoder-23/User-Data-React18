@@ -58,9 +58,13 @@ const Pagination = ({ showPerPage, onPagNav, total }) => {
             </Button>
           );
         })}
-        <Button variant="outline-success" onClick={() => onbtnClick('next')}>
-          Next
-        </Button>
+        {noOfbuttons === counter ? (
+          <></>
+        ) : (
+          <Button variant="outline-success" onClick={() => onbtnClick('next')}>
+            Next
+          </Button>
+        )}
       </div>
     </>
   );
