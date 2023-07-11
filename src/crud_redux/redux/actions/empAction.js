@@ -1,9 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { RootApi } from '../../../RootApi';
 
 // Get All Employees
 export const getAllEmployees = createAsyncThunk('employee/list', async () => {
-  const apiGetResponse = await axios.get(`http://localhost:3079/employee`);
+  const apiGetResponse = await RootApi.get(`/employee`);
   console.log('apiGetResponse->', apiGetResponse);
   if (apiGetResponse.status === 200) {
     return apiGetResponse.data;
