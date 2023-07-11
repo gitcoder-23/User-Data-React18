@@ -38,6 +38,9 @@ const Menu = () => {
                   <Dropdown.Item href="/employeelist">
                     Employee Crud App
                   </Dropdown.Item>
+                  <Dropdown.Item href="/redux/emplist">
+                    Employee Crud Using Redux
+                  </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             </ul>
