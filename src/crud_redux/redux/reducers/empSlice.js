@@ -1,5 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getAllEmployees, getSingleEmployee } from '../actions/empAction';
+import {
+  deleteSingleEmployee,
+  getAllEmployees,
+  getSingleEmployee,
+} from '../actions/empAction';
 
 const initialState = {
   employeeList: [],
@@ -60,6 +64,29 @@ const empSlice = createSlice({
     });
 
     // Get Single Employee End
+
+    // Delete Single Employee Start
+    builder.addCase(deleteSingleEmployee.pending, (state) => {
+      state.isLoading = true;
+      state.isMessage = 'Single employee delete loading';
+      state.isError = false;
+    });
+
+    builder.addCase(deleteSingleEmployee.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.employeeList = [...state.employeeList, action.payload];
+      state.isError = false;
+      state.isMessage = 'Single employee deleted';
+    });
+
+    builder.addCase(deleteSingleEmployee.rejected, (state, action) => {
+      state.isLoading = false;
+      state.employeeList = [];
+      state.isError = true;
+      state.isMessage = 'Something went wrong!';
+    });
+
+    // Delete Single Employee End
   },
 });
 

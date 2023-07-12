@@ -1,7 +1,11 @@
 import React, { useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllEmployees, getSingleEmployee } from './redux/actions/empAction';
+import {
+  deleteSingleEmployee,
+  getAllEmployees,
+  getSingleEmployee,
+} from './redux/actions/empAction';
 import SpinnerComponent from '../components/SpinnerComponent';
 import { useNavigate } from 'react-router-dom';
 
@@ -21,10 +25,19 @@ const EmpList = () => {
 
   // For employee View
   const empView = (viewId) => {
-    console.log('viewId->', viewId);
+    // console.log('viewId->', viewId);
     navigate(`/redux/empview/${viewId}`);
 
     dispatch(getSingleEmployee(viewId));
+  };
+
+  // For employee Delete
+  const empDelete = (delId) => {
+    console.log('delId->', delId);
+    if (window.confirm('Do you want to delete?')) {
+      dispatch(deleteSingleEmployee(delId));
+    }
+    dispatch(getAllEmployees());
   };
 
   return (
@@ -57,7 +70,7 @@ const EmpList = () => {
                 employeeList?.map((empData, userindex) => {
                   return (
                     <>
-                      <tbody key={userindex}>
+                      <tbody key={empData.id}>
                         <tr>
                           <td>{userindex + 1}</td>
                           &nbsp;&nbsp;
@@ -92,6 +105,7 @@ const EmpList = () => {
                                 borderWidth: '1px',
                                 borderRadius: '5px',
                               }}
+                              onClick={() => empDelete(empData.id)}
                             >
                               Delete
                             </button>
