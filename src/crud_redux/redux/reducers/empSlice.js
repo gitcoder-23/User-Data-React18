@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getAllEmployees } from '../actions/empAction';
+import { getAllEmployees, getSingleEmployee } from '../actions/empAction';
 
 const initialState = {
   employeeList: [],
+  singleEmployeeData: {},
   isLoading: false,
   isError: false,
   isMessage: '',
@@ -17,7 +18,7 @@ const empSlice = createSlice({
     // Get All Employees Start
     builder.addCase(getAllEmployees.pending, (state) => {
       state.isLoading = true;
-      state.isMessage = '';
+      state.isMessage = 'All employee loading';
       state.isError = false;
     });
 
@@ -25,7 +26,7 @@ const empSlice = createSlice({
       state.isLoading = false;
       state.employeeList = action.payload;
       state.isError = false;
-      state.isMessage = '';
+      state.isMessage = 'All employee displayed';
     });
 
     builder.addCase(getAllEmployees.rejected, (state, action) => {
@@ -36,6 +37,29 @@ const empSlice = createSlice({
     });
 
     // Get All Employees End
+
+    // Get Single Employee Start
+    builder.addCase(getSingleEmployee.pending, (state) => {
+      state.isLoading = true;
+      state.isMessage = 'Single employee loading';
+      state.isError = false;
+    });
+
+    builder.addCase(getSingleEmployee.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.singleEmployeeData = action.payload;
+      state.isError = false;
+      state.isMessage = 'Single employee displayed';
+    });
+
+    builder.addCase(getSingleEmployee.rejected, (state, action) => {
+      state.isLoading = false;
+      state.singleEmployeeData = {};
+      state.isError = true;
+      state.isMessage = 'Something went wrong!';
+    });
+
+    // Get Single Employee End
   },
 });
 

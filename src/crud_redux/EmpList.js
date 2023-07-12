@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllEmployees } from './redux/actions/empAction';
+import { getAllEmployees, getSingleEmployee } from './redux/actions/empAction';
 import SpinnerComponent from '../components/SpinnerComponent';
+import { useNavigate } from 'react-router-dom';
 
 const EmpList = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const { employeeList, isLoading, isError, isMessage } = useSelector(
@@ -16,6 +18,14 @@ const EmpList = () => {
   useEffect(() => {
     dispatch(getAllEmployees());
   }, []);
+
+  // For employee View
+  const empView = (viewId) => {
+    console.log('viewId->', viewId);
+    navigate(`/redux/empview/${viewId}`);
+
+    dispatch(getSingleEmployee(viewId));
+  };
 
   return (
     <>
@@ -58,7 +68,12 @@ const EmpList = () => {
                           <td>{empData.phone}</td>
                           &nbsp;&nbsp;
                           <td>
-                            <button className="btn btn-info">Show</button>
+                            <button
+                              className="btn btn-info"
+                              onClick={() => empView(empData.id)}
+                            >
+                              View
+                            </button>
                             &nbsp;
                             <button
                               className="btn btn-warning"
