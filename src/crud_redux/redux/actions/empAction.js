@@ -29,7 +29,7 @@ export const addAnEmployee = createAsyncThunk(
   async (empFormData) => {
     console.log('empFormData-action-->', empFormData);
     const apiGetResponse = await RootApi.post(`/employee/`, empFormData);
-    console.log('addAnEmployee->', apiGetResponse);
+    // console.log('addAnEmployee->', apiGetResponse);
     if (apiGetResponse.status === 201) {
       return apiGetResponse.data;
     }
