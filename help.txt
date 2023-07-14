@@ -8,3 +8,5 @@ https://react-bootstrap.github.io/
 
 // new task
 https://dummyjson.com/docs/users
+
+git fetch --all
