@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
+  addAnEmployee,
   deleteSingleEmployee,
   getAllEmployees,
   getSingleEmployee,
@@ -41,6 +42,29 @@ const empSlice = createSlice({
     });
 
     // Get All Employees End
+
+    // Add/ Create new Employee Start
+    builder.addCase(addAnEmployee.pending, (state) => {
+      state.isLoading = true;
+      state.isMessage = 'Add employee loading';
+      state.isError = false;
+    });
+
+    builder.addCase(addAnEmployee.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.employeeList = [...state.employeeList, action.payload];
+      state.isError = false;
+      state.isMessage = 'New employee created';
+    });
+
+    builder.addCase(addAnEmployee.rejected, (state, action) => {
+      state.isLoading = false;
+      state.employeeList = [];
+      state.isError = true;
+      state.isMessage = 'Something went wrong!';
+    });
+
+    // Add/ Create new Employee End
 
     // Get Single Employee Start
     builder.addCase(getSingleEmployee.pending, (state) => {

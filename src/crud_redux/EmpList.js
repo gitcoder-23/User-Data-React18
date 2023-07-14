@@ -47,7 +47,9 @@ const EmpList = () => {
           React App Using jsonplaceholder Api Redux-Toolkit
         </h1>{' '}
         <div className="container mb-3">
-          <Button variant="success">Add new</Button>
+          <Button variant="success" onClick={() => navigate('/redux/empadd')}>
+            Add new
+          </Button>
         </div>
         {isLoading === true ? (
           <>
