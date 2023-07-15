@@ -33,11 +33,19 @@ const EmpList = () => {
 
   // For employee Delete
   const empDelete = (delId) => {
-    console.log('delId->', delId);
     if (window.confirm('Do you want to delete?')) {
       dispatch(deleteSingleEmployee(delId));
     }
     dispatch(getAllEmployees());
+  };
+
+  // For Employee Edit
+  const empEdit = (empEData) => {
+    console.log('editId->', empEData.id);
+    navigate(`/redux/empedit/${empEData.id}`, {
+      state: { singleUser: empEData },
+    });
+    dispatch(getSingleEmployee(empEData.id));
   };
 
   return (
@@ -96,6 +104,7 @@ const EmpList = () => {
                                 borderWidth: '1px',
                                 borderRadius: '5px',
                               }}
+                              onClick={() => empEdit(empData)}
                             >
                               Modify
                             </button>
