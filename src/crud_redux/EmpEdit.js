@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Form, InputGroup } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import {
-  addAnEmployee,
-  editAnEmployee,
-  getSingleEmployee,
-} from './redux/actions/empAction';
+import { editAnEmployee, getSingleEmployee } from './redux/actions/empAction';
 
 const EmpEdit = () => {
   const navigate = useNavigate();
