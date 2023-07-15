@@ -15,6 +15,7 @@ import EmployeeEditTask from './app_using_jsonserver/employeeCrud/EmployeeEditTa
 import EmpList from './crud_redux/EmpList';
 import EmpView from './crud_redux/EmpView';
 import EmpAdd from './crud_redux/EmpAdd';
+import EmpEdit from './crud_redux/EmpEdit';
 
 const App = () => {
   return (
@@ -57,6 +58,7 @@ const App = () => {
           <Route exact path="/redux/emplist" element={<EmpList />} />
           <Route exact path="/redux/empview/:vid" element={<EmpView />} />
           <Route exact path="/redux/empadd" element={<EmpAdd />} />
+          <Route exact path="/redux/empedit/:edid" element={<EmpEdit />} />
         </Routes>
       </div>
     </>

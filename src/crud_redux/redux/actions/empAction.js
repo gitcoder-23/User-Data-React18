@@ -36,6 +36,22 @@ export const addAnEmployee = createAsyncThunk(
   }
 );
 
+// Edit/ Modify Employee
+export const editAnEmployee = createAsyncThunk(
+  'employee/edit',
+  async ({ emplId, emplFormData }) => {
+    console.log('empFormData-action-->', emplId, emplFormData);
+    const apiGetResponse = await RootApi.put(
+      `/employee/${emplId}`,
+      emplFormData
+    );
+    console.log('addAnEmployee->', apiGetResponse);
+    if (apiGetResponse.status === 200) {
+      return apiGetResponse.data;
+    }
+  }
+);
+
 // Delete Single Employee
 export const deleteSingleEmployee = createAsyncThunk(
   'employee/delete',
