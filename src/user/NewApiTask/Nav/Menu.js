@@ -13,6 +13,12 @@ const Menu = () => {
       }
     }
   }, []);
+
+  const makeLogOut = () => {
+    localStorage.removeItem('userlogdata');
+    window.location.reload();
+  };
+
   return (
     <>
       <Nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -57,6 +63,9 @@ const Menu = () => {
                       Login Authentication
                     </Dropdown.Item>
                   )}
+                  <Dropdown.Item onClick={() => makeLogOut()}>
+                    Logout
+                  </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             </ul>
