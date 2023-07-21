@@ -1,7 +1,18 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Dropdown, Nav } from 'react-bootstrap';
 
 const Menu = () => {
+  const [authState, setAuthState] = useState(false);
+
+  useEffect(() => {
+    const userData = localStorage.getItem('userlogdata');
+    if (userData) {
+      const userTokenData = JSON.parse(userData).token;
+      if (userTokenData) {
+        setAuthState(true);
+      }
+    }
+  }, []);
   return (
     <>
       <Nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -41,6 +52,11 @@ const Menu = () => {
                   <Dropdown.Item href="/redux/emplist">
                     Employee Crud Using Redux
                   </Dropdown.Item>
+                  {authState === false && (
+                    <Dropdown.Item href="/login">
+                      Login Authentication
+                    </Dropdown.Item>
+                  )}
                 </Dropdown.Menu>
               </Dropdown>
             </ul>
