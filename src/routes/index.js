@@ -17,81 +17,167 @@ import EmpEdit from '../crud_redux/EmpEdit';
 import Login from '../authentication/Login';
 import Menu from '../user/NewApiTask/Nav/Menu';
 
-function PrivateRoute({ children, auth }) {
-  return auth === true && <>{children}</>;
+function PrivateRoute({ children }) {
+  const userData = localStorage.getItem('userlogdata');
+  console.log('userData-->', userData);
+  return userData !== null ? (
+    <>{children}</>
+  ) : (
+    <>
+      <Navigate to="/login" />
+    </>
+  );
 }
 
-function PublicRoute({ children, auth }) {
-  return auth === false && <>{children}</>;
+function PublicRoute({ children }) {
+  const userData = localStorage.getItem('userlogdata');
+
+  return userData === null ? (
+    <>{children}</>
+  ) : (
+    <>
+      <Navigate to="/" />
+    </>
+  );
 }
 
 const AllRoutes = () => {
-  const [authState, setAuthState] = useState(false);
-
-  useEffect(() => {
-    const userData = localStorage.getItem('userlogdata');
-    if (userData) {
-      const userTokenData = JSON.parse(userData).token;
-      console.log('userTokenData-->', userTokenData);
-      if (userTokenData) {
-        setAuthState(true);
-      }
-    }
-  }, []);
-
-  console.log('authState-->', authState);
-
   return (
     <>
-      <div className="row mb-4">{authState === true ? <Menu /> : <></>}</div>
+      <div className="row mb-4">
+        <PrivateRoute>
+          <Menu />
+        </PrivateRoute>
+      </div>
 
       <Routes>
-        {authState === true ? (
-          <>
-            {' '}
-            <Route exact path="/" element={<Home />} />
-            <Route exact path="/userapp" element={<UserApp />} />
-            <Route exact path="/userapptask" element={<UserAppTask />} />
-            {/* Employee CRUD App */}
-            <Route exact path="/employeelist" element={<EmployeeList />} />
-            <Route
-              exact
-              path="/employeedetail/:eid"
-              element={<EmployeeDetail />}
-            />
-            <Route
-              exact
-              path="/employee/detail/:empid"
-              element={<EmployeeNewDetail />}
-            />
-            <Route
-              exact
-              path="/employee/edit/:empeid"
-              element={<EmployeeEdit />}
-            />
-            <Route
-              exact
-              path="/employee/useredit/:empeid"
-              element={<EmployeeEditTask />}
-            />
-            <Route exact path="/employee/add" element={<EmployeeAdd />} />
-            <Route
-              exact
-              path="/employee/addtask"
-              element={<EmployeeAddTask />}
-            />
-            {/* For Redux */}
-            <Route exact path="/redux/emplist" element={<EmpList />} />
-            <Route exact path="/redux/empview/:vid" element={<EmpView />} />
-            <Route exact path="/redux/empadd" element={<EmpAdd />} />
-            <Route exact path="/redux/empedit/:edid" element={<EmpEdit />} />
-          </>
-        ) : (
-          <>
-            {' '}
-            <Route exact path="/" element={<Login />} />
-          </>
-        )}
+        <Route
+          path="/"
+          element={
+            <PrivateRoute>
+              <Home />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/userapp"
+          element={
+            <PrivateRoute>
+              <UserApp />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/userapptask"
+          element={
+            <PrivateRoute>
+              <UserAppTask />
+            </PrivateRoute>
+          }
+        />
+
+        {/* Employee CRUD App */}
+        <Route
+          path="/employeelist"
+          element={
+            <PrivateRoute>
+              <EmployeeList />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/employeedetail/:eid"
+          element={
+            <PrivateRoute>
+              <EmployeeDetail />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/employee/detail/:empid"
+          element={
+            <PrivateRoute>
+              <EmployeeNewDetail />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/employee/edit/:empeid"
+          element={
+            <PrivateRoute>
+              <EmployeeEdit />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/employee/useredit/:empeid"
+          element={
+            <PrivateRoute>
+              <EmployeeEditTask />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/employee/add"
+          element={
+            <PrivateRoute>
+              <EmployeeAdd />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/employee/addtask"
+          element={
+            <PrivateRoute>
+              <EmployeeAddTask />
+            </PrivateRoute>
+          }
+        />
+
+        {/* For Redux */}
+        <Route
+          path="/redux/emplist"
+          element={
+            <PrivateRoute>
+              <EmpList />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/redux/empview/:vid"
+          element={
+            <PrivateRoute>
+              <EmpView />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/redux/empadd"
+          element={
+            <PrivateRoute>
+              <EmpAdd />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/redux/empedit/:edid"
+          element={
+            <PrivateRoute>
+              <EmpEdit />
+            </PrivateRoute>
+          }
+        />
+
+        {/* For Authentication */}
+        <Route
+          path="/login"
+          element={
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
+          }
+        />
       </Routes>
     </>
   );
