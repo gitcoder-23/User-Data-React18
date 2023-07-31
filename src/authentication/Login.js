@@ -39,9 +39,10 @@ const Login = () => {
       };
       console.log('userData-->', userData);
       dispatch(userRegister(userData)).then((resp) => {
-        console.log(resp);
+        console.log('resp:', resp);
         if (resp?.meta?.requestStatus === 'fulfilled') {
           const userloggedData = resp?.payload?.user;
+          console.log('userloggedData:', userloggedData);
           localStorage.setItem('userlogdata', JSON.stringify(userloggedData));
           setUserFormState({
             username: '',
